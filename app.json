@@ -1,12 +1,37 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/register/register",
+    "pages/logs/logs",
+    "pages/my/my"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#60689B",
+    "navigationBarTitleText": "停车联盟",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f1f1f1"
+  },
+  "tabBar": {
+    "color": "#CCCCCC",
+    "selectedColor": "#60689B",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/home_n.png",
+        "selectedIconPath": "images/home_a.png",
+        "selectedColor": "#60689B"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "images/my_n.png",
+        "selectedIconPath": "images/my_a.png",
+        "selectedColor": "#60689B"
+      }
+    ]
   }
 }

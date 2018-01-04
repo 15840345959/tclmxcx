@@ -1,39 +1,126 @@
 //app.js
+const util = require('./utils/util.js')
+var vm = null
+
 App({
   onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
+    //获取vm
+    vm = this
+    //获取用户缓存数据
+    var userInfo = wx.getStorageSync("userInfo");
+    console.log("local storage userInfo:" + JSON.stringify(userInfo));
+    //如果没有缓存
+    if (userInfo == null || userInfo == undefined || userInfo == "") {
+      //调用登录接口
+      vm.login(null);
+    } else {
+      vm.globalData.userInfo = wx.getStorageSync("userInfo");
+      console.log("vm.globalData.userInfo:" + JSON.stringify(vm.globalData.userInfo));
+    }
+  },
+  //微信登录
+  login: function (callBack) {
     wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+      success: function (res) {
+        console.log("wx.login:" + JSON.stringify(res))
+        if (res.code) {
+          util.getOpenId({ code: res.code }, function (ret) {
+            console.log("getOpenId:" + JSON.stringify(ret))
+            var openId = ret.data.ret.openid;
+            var param = {
+              xcx_openid: openId,
+              account_type: "xcx"
+            }
+            //通过openid到后端获取用户信息
+            util.loginServer(param, function (ret) {
+              console.log("login:" + JSON.stringify(ret));
+              //如果后台存在该用户数据，则代表已经注册，在本地建立缓存，下次无需二次登录校验
+              if (ret.data.code == "200" && ret.data.result == true) {
+                vm.storeUserInfo(ret.data.obj)
+              } else {
+                //否则引导用户至注册页面
+                util.navigateToRegister(param); //将param传递到register页面以便完成后续注册流程
+              }
+            }, null);
+          }, null);
+        }
       }
     })
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
+  },
+  //监听小程序打开
+  onShow: function () {
+    //获取用户地理位置
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+        var latitude = res.latitude
+        var longitude = res.longitude
+        var userLocation = [];
+        userLocation.lat = longitude;
+        userLocation.lon = latitude;
+        vm.globalData.userLocation = userLocation
+      }
+    })
+  },
+  storeUserInfo: function (obj) {
+    console.log("storeUserInfo :" + JSON.stringify(obj));
+    wx.setStorage({
+      key: "userInfo",
+      data: obj
+    });
+    vm.globalData.userInfo = obj;
+  },
+  getUserInfo: function (cb) {
+    typeof cb == "function" && cb(vm.globalData.userInfo)
+  },
+  getSystemInfo: function (cb) {
 
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
+    if (vm.globalData.systemInfo) {
+      typeof cb == "function" && cb(vm.globalData.systemInfo)
+    } else {
+      wx.getSystemInfo({
+        success: function (res) {
+          vm.globalData.systemInfo = res
+          typeof cb == "function" && cb(vm.globalData.systemInfo)
+        }
+      })
+    }
+  },
+  //引导用户授权
+  showModal: function () {
+    wx.showModal({
+      title: '提示',
+      content: '若不授权获取用户信息，停车联盟的部分重要功能将无法使用；请点击【重新授权】——选中【用户信息】和【地理位置】方可使用。',
+      showCancel: false,
+      confirmText: "重新授权",
+      success: function (res) {
+        if (res.confirm) {
+          vm.openSetting()
+        }
+      }
+    })
+  },
+  openSetting: function () {
+    wx.openSetting({
+      success: (res) => {
+        console.log("Result" + JSON.stringify(res))
+        if (!res.authSetting["scope.userInfo"] || !res.authSetting["scope.userLocation"]) {
+          vm.showModal()
+        }
+        else {
+          vm.updateUserInfo(function (ret) {
           })
         }
       }
     })
   },
+  //全局变量
   globalData: {
-    userInfo: null
+    userInfo: null,
+    systemInfo: null,
+    userLocation: {
+      lat: "",
+      lon: ""
+    }
   }
 })
