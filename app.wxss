@@ -1,5 +1,4 @@
 /**app.wxss**/
-
 @import './styles/weui.wxss';
 
 .container {
@@ -10,7 +9,7 @@
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-} 
+}
 
 page {
   height: 100%;
@@ -20,4 +19,158 @@ page {
 .page {
   background-color: #f1f1f1;
   height: 100%;
+}
+
+.white-bg {
+  background: #fff;
+}
+
+.main-bg {
+  background: #60689b;
+}
+
+.white-font {
+  color: #fff;
+}
+
+.grey-font {
+  color: #888;
+}
+
+/* 居中样式 */
+
+.center-style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 100%的width */
+
+.full-width {
+  width: 100%;
+}
+
+/* 高度设置 */
+
+.register-input-style {
+  height: 44px;
+  line-height: 44px;
+  border-radius: 44px;
+}
+
+/* float对齐样式 */
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+/* 文字对齐样式 */
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+/* AUI样式迁移 */
+
+.aui-text-default {
+  color: #666 !important;
+}
+
+.aui-text-primary {
+  color: #1abc9c !important;
+}
+
+.aui-text-success {
+  color: #2ecc71 !important;
+}
+
+.aui-text-info {
+  color: #3498db !important;
+}
+
+.aui-text-warning {
+  color: #f1c40f !important;
+}
+
+.aui-text-danger {
+  color: #e74c3c !important;
+}
+
+.aui-text-blue {
+  color: #a1d4cf !important;
+}
+
+.aui-text-pink {
+  color: #fbb8af !important;
+}
+
+.aui-bg-default {
+  background-color: #f4f4f4 !important;
+}
+
+.aui-bg-primary {
+  background-color: #1abc9c !important;
+}
+
+.aui-bg-success {
+  background-color: #2ecc71 !important;
+}
+
+.aui-bg-info {
+  background-color: #3498db !important;
+}
+
+.aui-bg-warning {
+  background-color: #f1c40f !important;
+}
+
+.aui-bg-danger {
+  background-color: #e74c3c !important;
+}
+
+.aui-bg-blue {
+  background-color: #a1d4cf !important;
+}
+
+.aui-bg-pink {
+  background-color: #fbb8af !important;
+}
+
+
+/* 字体设置 */
+.font-size-10 {
+  font-size: 10px;
+}
+
+.font-size-12 {
+  font-size: 12px;
+}
+
+.font-size-13 {
+  font-size: 13px;
+}
+
+.font-size-14 {
+  font-size: 14px;
+}
+
+.font-size-16 {
+  font-size: 16px;
+}
+
+.font-size-18 {
+  font-size: 18px;
 }

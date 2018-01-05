@@ -40,7 +40,7 @@ function wxRequest(url, param, method, successCallback, errorCallback) {
 
 //获取七牛token
 function getQiniuToken(param, successCallback, errorCallback) {
-  wxRequest(SERVER_URL + '/api/user/getQiniuToken', param, "POST", successCallback, errorCallback);
+  wxRequest(SERVER_URL + '/api/user/getQiniuToken', param, "GET", successCallback, errorCallback);
 }
 
 //获取用户的OpenId
@@ -84,6 +84,16 @@ function judgeIsAnyNullStr() {
     }
   }
   return false;
+}
+
+//是否为手机号
+function isPoneAvailable(str) {
+  var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+  if (!myreg.test(str)) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 
@@ -176,6 +186,13 @@ function conStr(str, r_str) {
     return r_str;
   }
   return str;
+}
+
+//返回
+function navigateBack(delta) {
+  wx.navigateBack({
+    delta: delta
+  })
 }
 
 //跳转到主页
@@ -442,7 +459,9 @@ module.exports = {
   showModal: showModal,
   judgeIsAnyNullStr: judgeIsAnyNullStr,
   getToday: getToday,
+  isPoneAvailable: isPoneAvailable,
 
+  navigateBack: navigateBack,   //进行页面跳回
   navigateToRegister: navigateToRegister,  //跳转到注册页面
   navigateToIndex: navigateToIndex	//跳转到首页
 
