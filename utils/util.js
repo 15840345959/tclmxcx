@@ -1,5 +1,5 @@
 //测试标识
-var TESTMODE = true;
+var TESTMODE = false;
 //服务器地址
 var SERVER_URL = "http://tclm.isart.me";
 var DEBUG_URL = "http://localhost/tclm/public";
@@ -62,6 +62,18 @@ function sendVertifyCode(param, successCallback, errorCallback) {
 function register(param, successCallback, errorCallback) {
   wxRequest(SERVER_URL + '/api/user/register', param, "POST", successCallback, errorCallback);
 }
+
+//获取首页轮播图
+function getIndexADs(param, successCallback, errorCallback) {
+  wxRequest(SERVER_URL + '/api/index/getXCXADs', param, "GET", successCallback, errorCallback);
+}
+
+//获取首页信息
+
+function getIndexInfo(param, successCallback, errorCallback) {
+  // wxRequest(SERVER_URL + '/api/index/getXCXADs', param, "GET", successCallback, errorCallback);
+}
+
 
 
 
@@ -451,6 +463,10 @@ module.exports = {
   loginServer: loginServer,
   register: register,
   sendVertifyCode: sendVertifyCode,
+
+  // 首页接口
+  getIndexADs: getIndexADs,
+  getIndexInfo: getIndexInfo,
 
   formatTime: formatTime,
   showLoading: showLoading,

@@ -53,9 +53,10 @@ App({
     wx.getLocation({
       type: 'wgs84',
       success: function (res) {
+        console.log('getLocation res is : ' + JSON.stringify(res))
         var latitude = res.latitude
         var longitude = res.longitude
-        var userLocation = [];
+        var userLocation = {};
         userLocation.lat = longitude;
         userLocation.lon = latitude;
         vm.globalData.userLocation = userLocation
