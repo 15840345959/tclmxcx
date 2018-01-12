@@ -57,8 +57,8 @@ App({
         var latitude = res.latitude
         var longitude = res.longitude
         var userLocation = {};
-        userLocation.lat = longitude;
-        userLocation.lon = latitude;
+        userLocation.lat = latitude;
+        userLocation.lon = longitude;
         vm.globalData.userLocation = userLocation
       }
     })

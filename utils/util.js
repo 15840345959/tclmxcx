@@ -69,9 +69,13 @@ function getIndexADs(param, successCallback, errorCallback) {
 }
 
 //获取首页信息
-
 function getIndexInfo(param, successCallback, errorCallback) {
   // wxRequest(SERVER_URL + '/api/index/getXCXADs', param, "GET", successCallback, errorCallback);
+}
+
+//
+function getAddress(param, successCallback, errorCallback) {
+  wxRequest(SERVER_URL + '/api/map/getAddress', param, "GET", successCallback, errorCallback);
 }
 
 
@@ -467,6 +471,9 @@ module.exports = {
   // 首页接口
   getIndexADs: getIndexADs,
   getIndexInfo: getIndexInfo,
+
+  // 地图
+  getAddress: getAddress,
 
   formatTime: formatTime,
   showLoading: showLoading,
