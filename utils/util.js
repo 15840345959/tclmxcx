@@ -70,10 +70,10 @@ function getIndexADs(param, successCallback, errorCallback) {
 
 //获取首页信息
 function getIndexInfo(param, successCallback, errorCallback) {
-  // wxRequest(SERVER_URL + '/api/index/getXCXADs', param, "GET", successCallback, errorCallback);
+	wxRequest(SERVER_URL + '/api/busi/getInformation', param, "GET", successCallback, errorCallback);
 }
 
-//
+//根据经纬度获取地址信息
 function getAddress(param, successCallback, errorCallback) {
   wxRequest(SERVER_URL + '/api/map/getAddress', param, "GET", successCallback, errorCallback);
 }

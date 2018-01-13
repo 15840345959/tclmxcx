@@ -6,11 +6,12 @@ var app = getApp()
 Page({
   data: {
     imgUrls: [],
+	formatted_address: "正在定位",
+	indexInfo: [],
     indicatorDots: true,
     autoplay: true,
     interval: 5000,
     duration: 1000,
-
   },
   onLoad: function (options) {
     
@@ -21,6 +22,8 @@ Page({
     console.log('globalData is : ' + JSON.stringify(globalData))
 
     this.getAddress(globalData.userLocation)
+	this.getIndexInfo()
+	
   },
   changeIndicatorDots: function (e) {
     this.setData({
@@ -57,16 +60,19 @@ Page({
     })
   },
   getIndexInfo: function () {
-    util.getIndexADs({}, function (ret) {
+	  util.getIndexInfo({}, function (ret) {
       var data = ret.data.ret
+	  console.log('getIndexInfo data is : ' + JSON.stringify(data))
     }, function (err) {
 
     })
   },
   getAddress: function (location) {
-
     util.getAddress(location, function (ret) {
-
+		var addressComponent = ret.data.ret.result.addressComponent
+		vm.setData({
+			formatted_address: addressComponent.city + addressComponent.district + addressComponent.street
+		})
     }, function (err) {
 
     })
