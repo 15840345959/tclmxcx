@@ -1,4 +1,4 @@
-<map id="map" longitude="{{ userLocation.lon }}" latitude="{{ userLocation.lat }}" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location
+<!-- <map id="map" longitude="{{ userLocation.lon }}" latitude="{{ userLocation.lat }}" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location
   style="width: 100%; height: 300px;">
   <cover-view style="width: 90%; height: 66px; background-color: #fff; margin: 220px auto auto auto; border-radius: 20rpx; text-align: center; border: 2rpx solid #ddd;">
     <cover-view style="height: 50%; text-algin: center; display: flex; justify-content: center; align-items: center;">
@@ -7,26 +7,27 @@
     <cover-view style="height: 0; border: 0.5rpx solid #ddd; width: 90%; margin: 0 auto;"></cover-view>
     <cover-view style="height: 50%; text-algin: center;">
       <cover-view style="width: 90%; height: 100%; border-top: none; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
-         <cover-view style="display: inline-block; color: #000; margin: auto;">黄河大街与崇山路交叉口</cover-view>  
+         <cover-view style="display: inline-block; color: #000; margin: auto; font-size: 28rpx;">黄河大街与崇山路交叉口</cover-view>  
       </cover-view>
     </cover-view>
   </cover-view>
-</map>
+</map>  -->
 
 <view class="weui-cells">
   <view class="weui-cell">
     <view class="weui-cell__bd">
       <view class="weui-uploader">
         <view class="weui-uploader__hd">
-          <view class="weui-uploader__title">上传图片 最少两张，最多三张</view>
-          <view class="weui-uploader__info">0/3</view>
+          <view class="weui-uploader__title">上传照片 最少两张，最多三张</view>
+          <view class="weui-uploader__info">{{files.length}}/3</view>
         </view>
         <view class="weui-uploader__bd">
           <view class="weui-uploader__files" id="uploaderFiles">
             <block wx:for="{{files}}" wx:key="*this">
-              <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-              </view>
+                <view class="weui-uploader__file" catchtap="previewImage" id="{{item}}" style='position: relative;'>
+                  <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                  <image src="/images/delete.png" catchtap="clickDelete" class="delete_btn" data-index="{{index}}" />
+                </view>
             </block>
           </view>
           <view class="weui-uploader__input-box">
@@ -36,4 +37,11 @@
       </view>
     </view>
   </view>
+</view>
+
+<view style="margin: 30rpx 40rpx; height:260rpx; position: relative;" >
+  <view class="intro-content">
+    <textarea name="intro" class="padding-left-10 padding-top-10 padding-bottom-10 padding-right-40" placeholder="{{intro.content === '' ? '请简单描述情况（100字以内，选填）' : intro.content}}" />
+  </view>
+  <view style="position: absolute; right: 10rpx; bottom: 0;">{{intro.length}} / 100</view>
 </view>

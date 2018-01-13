@@ -36,7 +36,7 @@ App({
               console.log("login:" + JSON.stringify(ret));
               //如果后台存在该用户数据，则代表已经注册，在本地建立缓存，下次无需二次登录校验
               if (ret.data.code == "200" && ret.data.result == true) {
-                vm.storeUserInfo(ret.data.obj)
+                vm.storeUserInfo(ret.data.ret)
               } else {
                 //否则引导用户至注册页面
                 util.navigateToRegister(param); //将param传递到register页面以便完成后续注册流程

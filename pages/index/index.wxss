@@ -12,73 +12,10 @@ page {
   border-radius: 10%;
 }
 
-
-.btn {
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-}
-
-.btn:hover {
-    color: #333;
-    text-decoration: none;
-}
-
-.btn-group {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.btn, .btn-group {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.btn-default {
-    color: #333;
-    background-color: #fff;
-    border-color: #ccc;
-}
-
-.btn-default:hover {
-    color: #333;
-    background-color: #e6e6e6;
-    border-color: #adadad;
-}
-
-.btn-group .btn+.btn, .btn-group .btn+.btn-group, .btn-group .btn-group+.btn, .btn-group .btn-group+.btn-group {
-    margin-left: -1px;
-}
-
-.btn-group>.btn:first-child:not(:last-child) {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    /* border-right: none; */
-}
-
-.btn-group>.btn:not(:first-child):not(:last-child) {
-    border-radius: 0;
-}
-
-.btn-group>.btn:last-child:not(:first-child) {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    /* border-left: none; */
-}
+.themes-list{ background: #FFF; display: block; margin-bottom: 20rpx; }
+.themes-list-box{ display: block; position: relative; padding: 32rpx 32rpx; }
+.themes-list-thumbnail{ position: absolute; left: 32rpx; top: 32rpx; height: 160rpx; width: 160rpx; }
+.themes-list-img{ width: 160rpx; height: 160rpx; border-radius: 20rpx; border: 1px solid #F2F2F2; }
+.themes-list-main{ margin-left: 160rpx; }
+.themes-list-name{ font-size: 32rpx; color: #606898; height: 80rpx; line-height: 50rpx; overflow: hidden; text-align: right; }
+.themes-list-description{ font-size: 28rpx; color: #999; height: 80rpx; line-height: 120rpx; overflow: hidden; text-align: right; }

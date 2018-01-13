@@ -1,38 +1,49 @@
 <!--index.wxml-->
 <!-- <view class="container"> -->
-  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-    <block wx:for="{{imgUrls}}">
-      <swiper-item>
-        <image src="{{item}}" class="slide-image" width="355" height="150"/>
-      </swiper-item>
-    </block>
-  </swiper>
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+  <block wx:for="{{imgUrls}}" wx:key="*this">
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" width="355" height="150" />
+    </swiper-item>
+  </block>
+</swiper>
 
-    <!-- <view class="btn-group">
-      <view class="btn btn-default">信息上报</view>
-      <view class="btn btn-default">偷停一会</view>
-    </view> -->
+<view style='width: 90%; background-color: #fff; margin: 20rpx auto; height: 110rpx; border-radius: 20rpx;'>
+  <view bindtap='clickOpenReport' style="width: 50%; text-align: center; line-height: 70rpx; display: inline-block; color: #686868; font-size: 34rpx; margin-top: 20rpx;">
+    信息上报
+  </view>
+  <view style="width: 50%; text-align: center; line-height: 70rpx; display: inline-block; color: #686868; font-size: 34rpx; margin-top: 20rpx; margin-left: -1rpx; border-left: 1rpx solid #e2e2e2;">
+    偷停一会
+  </view>
+</view>
 
-    <view style='width: 90%; background-color: #fff; margin: 20rpx auto; height: 110rpx; border-radius: 40rpx;'>
-      <view bindtap='clickOpenReport' style="width: 50%; text-align: center; line-height: 70rpx; display: inline-block; color: #686868; font-size: 34rpx; margin-top: 20rpx;">
-        信息上报
-      </view>
-      <view style="width: 50%; text-align: center; line-height: 70rpx; display: inline-block; color: #686868; font-size: 34rpx; margin-top: 20rpx; margin-left: -1rpx; border-left: 1rpx solid #e2e2e2;">
-        偷停一会
-      </view>
+<view style='width: 90%; background-color: #fff; margin: 20rpx auto; height: 70rpx; border-radius: 40rpx; flex-direction: row; display: flex;'>
+  <image src="/images/position.png" style="margin: 10rpx 50rpx; height: 50rpx; width: 50rpx;"></image>
+  <view style='height: 100%; line-height: 70rpx; font-size: 32rpx; color: #606898;'>当前城市：
+
+  </view>
+  <view style='height: 100%; line-height: 70rpx; font-size: 32rpx; color: #606898;'> {{address}} </view>
+  <image src="/images/arrow.png" style="margin: 10rpx 20rpx 10rpx auto; height: 50rpx; width: 50rpx;"></image>
+</view>
+
+<view style='width: 90%; background-color: #fff; margin: 20rpx auto auto auto; border-radius: 20rpx;'>
+  <block wx:if="{{indexInfo}}">
+    <view class="themes-list-box" wx:for="{{indexInfo}}" wx:key="*this">
+        <navigator url="../themes/themes?id={{item.id}}">
+            <view class="themes-list-thumbnail">
+                <image class="themes-list-img" src="{{item.img}}" />
+            </view>
+            <view class="themes-list-main">
+                <view class="themes-list-name">{{item.street}}正在贴条，请速挪车</view>
+                <view class="themes-list-description">{{item.created_at}}</view>
+            </view>
+        </navigator>
     </view>
+  </block>
+  <block wx:else>
 
-    <view style="width: 90%; background-color: #fff; margin: 20rpx auto; height: 70rpx; border-radius: 40rpx; flex-direction: row; display: flex;">
-      <image src="/images/position.png" style="margin: 10rpx 25rpx; height: 50rpx; width: 50rpx;" ></image>
-      <view style='height: 100%; line-height: 70rpx; font-size: 32rpx; color: #606898;'>当前城市 :
-      </view> 
-      <view style="height: 100%; line-height: 70rpx; font-size: 32rpx; color: #606898; margin-left: 20rpx;"> {{formatted_address}} </view>
-      <image src="/images/arrow.png" style="margin: 10rpx 20rpx 10rpx auto; height: 50rpx; width: 50rpx;" ></image>
-    </view>
+  </block> 
 
-    <view style='width: 90%; background-color: #fff; margin: 20rpx auto; border-radius: 40rpx;'>
 
-    </view>
-  
-  
 
+</view>

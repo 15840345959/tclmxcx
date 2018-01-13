@@ -1,3 +1,4 @@
 {
-  "navigationBarTitleText": "上报信息"
+  "navigationBarTitleText": "上报信息",
+  "enablePullDownRefresh": true
 }

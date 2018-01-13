@@ -1,38 +1,38 @@
-.btn {
-    display: inline-block;
-    padding: 0 6px;
-    margin-bottom: 0;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
+.delete_btn {
+  position: absolute;
+  right: -16rpx;
+  top: -16rpx;
+  width: 40rpx;
+  height: 40rpx;
 }
 
-.btn:hover {
-    color: #333;
-    text-decoration: none;
+.weui-cells::before {
+  border-top: none;
 }
 
-.btn-default {
-    color: #fff;
-    background-color: #ff8159;
-    border-color: transparent;
+.weui-cells:after {
+  border-bottom: none;
 }
 
-.btn-default:hover {
-    color: #333;
-    background-color: #e6e6e6;
-    border-color: #adadad;
+.weui-uploader__file {
+  margin: 9px 0 0 9px;
+}
+
+.weui-uploader__input-box {
+  margin: 9px 0 0 9px;
+}
+
+.intro-content{
+  height:260rpx; 
+  border-radius: 8px; 
+  border:#dcdcdc 1rpx solid;
+  font-size: 30rpx;
+  color: #B4B4B4;
+}
+textarea {
+  height:260rpx;
+  display:block;
+  position:relative;
+  font-size: 30rpx;
+  color: #000;
 }
