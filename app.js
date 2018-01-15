@@ -56,9 +56,9 @@ App({
         console.log('getLocation res is : ' + JSON.stringify(res))
         var latitude = res.latitude
         var longitude = res.longitude
-        var userLocation = {};
-        userLocation.lat = latitude;
-        userLocation.lon = longitude;
+        var userLocation = {}
+        userLocation.lat = latitude
+        userLocation.lon = longitude
         vm.globalData.userLocation = userLocation
       }
     })
@@ -122,6 +122,7 @@ App({
     userLocation: {
       lat: "",
       lon: ""
-    }
+    },
+    addressComponent: {}
   }
 })

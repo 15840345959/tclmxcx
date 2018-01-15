@@ -1,3 +1,4 @@
+
 .delete_btn {
   position: absolute;
   right: -16rpx;
@@ -29,10 +30,91 @@
   font-size: 30rpx;
   color: #B4B4B4;
 }
+
 textarea {
   height:260rpx;
   display:block;
   position:relative;
   font-size: 30rpx;
   color: #000;
+}
+
+.submit {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #60689b;
+  color: #fff;
+  border-radius: 0;
+}
+
+.page {
+  position: relative;
+}
+
+.mark {
+  background: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.tip {
+  width: 80%;
+  /* height: 200rpx; */
+  margin: 0 auto;
+  border: 1rpx solid #ddd;
+  border-radius: 20rpx;
+  background: #fff;
+}
+
+.vertical-middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tip-title {
+  margin-top: 20rpx;
+  text-align: center;
+  font-size: 40rpx;
+  color: #60689b;
+}
+
+.tip-content {
+  margin-top: 40rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #ddd;
+}
+
+.tip-current-points {
+  margin-top: 40rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #000;
+}
+
+.tip-button {
+  margin-top: 40rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #000;
+}
+
+.btn {
+  margin: 40rpx auto;
+  max-width: 40%;
+  min-height: 50rpx;
+  line-height: 50rpx;
+  border-radius: 10rpx;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
 }

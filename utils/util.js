@@ -73,11 +73,15 @@ function getIndexInfo(param, successCallback, errorCallback) {
   wxRequest(SERVER_URL + '/api/busi/getInformation', param, "GET", successCallback, errorCallback);
 }
 
-//
+//根据经纬度获取位置信息
 function getAddress(param, successCallback, errorCallback) {
   wxRequest(SERVER_URL + '/api/map/getAddress', param, "GET", successCallback, errorCallback);
 }
 
+//上报信息
+function uploadInfo(param, successCallback, errorCallback) {
+  wxRequest(SERVER_URL + '/api/busi/uploadInfo', param, "POST", successCallback, errorCallback);
+}
 
 // 转换真实地址
 function getImgRealUrl (key) {
@@ -469,12 +473,12 @@ module.exports = {
   register: register,
   sendVertifyCode: sendVertifyCode,
 
-  // 首页接口
   getIndexADs: getIndexADs,
   getIndexInfo: getIndexInfo,
 
-  // 地图
   getAddress: getAddress,
+
+  uploadInfo: uploadInfo,
 
   getImgRealUrl: getImgRealUrl,
 

@@ -10,6 +10,7 @@ Page({
     city: '',
     district: '',
     street: '',
+    addressComponent: {},
     indexInfo: [],
     indicatorDots: true,
     autoplay: true,
@@ -91,7 +92,6 @@ Page({
         indexInfo: data
       })
       
-
     }, function (err) {
 
     })
@@ -105,6 +105,9 @@ Page({
         district: addressComponent.district,
         street: addressComponent.street
       })
+
+      app.globalData.addressComponent = addressComponent
+
       console.log('data is : ' + JSON.stringify(vm.data))
       vm.getIndexInfo({ district: vm.data.district, street: vm.data.street })
     }, function (err) {

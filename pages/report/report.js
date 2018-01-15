@@ -15,15 +15,9 @@ Page({
       length: 0,
       content: ''
     },
+    addressComponent: {},
     markers: [
-      // {
-      //   iconPath: "/resources/others.png",
-      //   id: 0,
-      //   latitude: 23.099994,
-      //   longitude: 113.324520,
-      //   width: 50,
-      //   height: 50
-      // }
+      
     ],
     controls: [
       // {
@@ -37,7 +31,8 @@ Page({
       //   },
       //   clickable: true
       // }
-    ]
+    ],
+    markShow: false
   },
   onLoad: function (options) {
     vm = this;
@@ -45,9 +40,18 @@ Page({
   },
   getGlobalLocation: function () {
     var userLocation = app.globalData.userLocation
-
+    var addressComponent = app.globalData.addressComponent
     vm.setData({
-      userLocation: userLocation
+      userLocation: userLocation,
+      addressComponent: addressComponent,
+      markers: [{
+        iconPath: "/images/position.png",
+        id: 0,
+        latitude: app.globalData.userLocation.lat,
+        longitude: app.globalData.userLocation.lon,
+        width: 30,
+        height: 30
+      }]
     })
 
     console.log('data is : ' + JSON.stringify(vm.data))
@@ -66,11 +70,11 @@ Page({
   },
   chooseImage: function () {
 
-    if(vm.data.files.length >= 3) {
+    if(vm.data.files.length >= 1) {
 
       wx.showModal({
-        title: '提示',
-        content: '已经上传3张照片了',
+        title: '提示信息',
+        content: '已经上传1张照片了，最多上传一张',
         showCancel: false,
         success: function (res) {
           if (res.confirm) {
@@ -146,6 +150,110 @@ Page({
       current: e.currentTarget.id, // 当前显示图片的http链接
       urls: this.data.files // 需要预览的图片http链接列表
     })
+  },
+  clickReport: function () {
+
+    console.log('clickReport')
+
+    var param = {}
+
+    param.lat = vm.data.userLocation.lat
+    param.lon = vm.data.userLocation.lon
+
+    if (vm.data.files[0]) {
+      param.img = vm.data.files[0]
+    } else {
+      wx.showModal({
+        title: '提示信息',
+        content: '请添加一张现场照片',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+
+          } else if (res.cancel) {
+
+          }
+        }
+      })
+      return
+    }
+
+    param.province = vm.data.addressComponent.province
+    param.city = vm.data.addressComponent.city
+    param.district = vm.data.addressComponent.district
+    param.street = vm.data.addressComponent.street
+    param.position = vm.data.addressComponent.province + vm.data.addressComponent.city + vm.data.addressComponent.district + vm.data.addressComponent.street
+    
+    if (vm.data.intro.length !== 0) {
+      param.desc = vm.data.intro.content
+    }
+
+    console.log('clickReport param is : ' + JSON.stringify(param))
+
+    this.uploadInfo(param)
+  },
+  uploadInfo: function (param) {
+    util.uploadInfo(param, function (ret) {
+      console.log('uploadInfo ret is : ' + JSON.stringify(ret))
+
+      vm.setData({
+        markShow: true
+      })
+
+    }, function (err) {
+      console.log('uploadInfo err is : ' + JSON.stringify(err))
+    })
+  },
+  textAreaEventListener: function (e) {
+    console.log('textAreaEventListener : ' + JSON.stringify(e))
+
+    if (e.detail.cursor >= 100) {
+      wx.showModal({
+        title: '提示信息',
+        content: '描述信息最多输入100个字符，请删减',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+
+          } else if (res.cancel) {
+
+          }
+        }
+      })
+      return
+    }
+
+    vm.setData({
+      'intro.length': e.detail.cursor,
+      'intro.content': e.detail.value
+    })
+  },
+  clickGetLocation: function () {
+    console.log('clickGetLocation')
+
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+        console.log('getLocation res is : ' + JSON.stringify(res))
+        var latitude = res.latitude
+        var longitude = res.longitude
+        var userLocation = {}
+        userLocation.lat = latitude
+        userLocation.lon = longitude
+
+
+        app.globalData.userLocation = userLocation
+
+        vm.getGlobalLocation()
+      }
+    })
+  },
+  closeMark: function () {
+    vm.setData({
+      markShow: false
+    })
+
+    wx.navigateBack({})
   }
 
 })

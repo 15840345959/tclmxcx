@@ -1,5 +1,4 @@
-<!--index.wxml-->
-<!-- <view class="container"> -->
+
 <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
   <block wx:for="{{imgUrls}}" wx:key="*this">
     <swiper-item>
@@ -17,6 +16,19 @@
   </view>
 </view>
 
+<block wx:if="{{indexInfo}}">
+  <view style='width: 90%; background-color: #fff; margin: 20rpx auto; height: 22 0rpx; border-radius: 20rpx; flex-direction: row; display: flex;'>
+    <view class="themes-list-box">
+      <view class="themes-list-thumbnail" style="margin-left: 60rpx;">
+        <image class="themes-list-img" style="border: none;" src="/images/police.png" />
+      </view>
+      <view class="themes-list-main" style="margin-left: 300rpx; height: 100%;">
+        <view class="themes-list-name" style="height: 100%; text-align: left;">主人，您的爱车附近有警察正在贴条，请速速挪车</view>
+      </view>
+    </view>
+  </view>
+</block>
+
 <view style='width: 90%; background-color: #fff; margin: 20rpx auto; height: 70rpx; border-radius: 40rpx; flex-direction: row; display: flex;'>
   <image src="/images/position.png" style="margin: 10rpx 50rpx; height: 50rpx; width: 50rpx;"></image>
   <view style='height: 100%; line-height: 70rpx; font-size: 32rpx; color: #606898;'>当前城市：
@@ -26,7 +38,7 @@
   <image src="/images/arrow.png" style="margin: 10rpx 20rpx 10rpx auto; height: 50rpx; width: 50rpx;"></image>
 </view>
 
-<view style='width: 90%; background-color: #fff; margin: 20rpx auto auto auto; border-radius: 20rpx;'>
+<view style='width: 90%; background-color: #fff; margin: 20rpx auto 40rpx auto; border-radius: 20rpx;'>
   <block wx:if="{{indexInfo}}">
     <view class="themes-list-box" wx:for="{{indexInfo}}" wx:key="*this">
         <navigator url="../themes/themes?id={{item.id}}">
@@ -42,8 +54,7 @@
   </block>
   <block wx:else>
 
-  </block> 
-
-
-
+  </block>
 </view>
+
+<view style='height: 10rpx;'></view>

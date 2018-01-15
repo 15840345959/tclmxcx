@@ -1,25 +1,25 @@
-<!-- <map id="map" longitude="{{ userLocation.lon }}" latitude="{{ userLocation.lat }}" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location
-  style="width: 100%; height: 300px;">
-  <cover-view style="width: 90%; height: 66px; background-color: #fff; margin: 220px auto auto auto; border-radius: 20rpx; text-align: center; border: 2rpx solid #ddd;">
+<map id="map" longitude="{{ userLocation.lon }}" latitude="{{ userLocation.lat }}" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location
+  style="width: 100%; height: 260px;">
+  <cover-view style="width: 90%; height: 66px; background-color: #fff; margin: 180px auto auto auto; border-radius: 20rpx; text-align: center; border: 2rpx solid #ddd;">
     <cover-view style="height: 50%; text-algin: center; display: flex; justify-content: center; align-items: center;">
-        <cover-view style="min-width: 30%; min-height: 48rpx; display: inline-block; border: 1px solid transparent; border-radius: 6px;  background-color: #ff8159; color: #fff; margin: auto; line-height: 48rpx; font-size: 28rpx;">定位当前位置</cover-view>
+        <cover-view style="min-width: 30%; min-height: 48rpx; display: inline-block; border: 1px solid transparent; border-radius: 6px;  background-color: #ff8159; color: #fff; margin: auto; line-height: 48rpx; font-size: 28rpx;" bindtap='clickGetLocation'>定位当前位置</cover-view>
     </cover-view>
     <cover-view style="height: 0; border: 0.5rpx solid #ddd; width: 90%; margin: 0 auto;"></cover-view>
     <cover-view style="height: 50%; text-algin: center;">
       <cover-view style="width: 90%; height: 100%; border-top: none; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
-         <cover-view style="display: inline-block; color: #000; margin: auto; font-size: 28rpx;">黄河大街与崇山路交叉口</cover-view>  
+         <cover-view style="display: inline-block; color: #000; margin: auto; font-size: 28rpx;">{{addressComponent.street}}{{addressComponent.direction}}</cover-view>  
       </cover-view>
     </cover-view>
   </cover-view>
-</map>  -->
+</map>      
 
-<view class="weui-cells">
+<view class="weui-cells" style='margin-top: 0;'>
   <view class="weui-cell">
     <view class="weui-cell__bd">
       <view class="weui-uploader">
         <view class="weui-uploader__hd">
-          <view class="weui-uploader__title">上传照片 最少两张，最多三张</view>
-          <view class="weui-uploader__info">{{files.length}}/3</view>
+          <view class="weui-uploader__title">上传照片</view>
+          <view class="weui-uploader__info">{{files.length}}/1</view>
         </view>
         <view class="weui-uploader__bd">
           <view class="weui-uploader__files" id="uploaderFiles">
@@ -39,9 +39,34 @@
   </view>
 </view>
 
-<view style="margin: 30rpx 40rpx; height:260rpx; position: relative;" >
+<view style="margin: 30rpx 40rpx 30rpx 40rpx; height:260rpx; position: relative;" >
   <view class="intro-content">
-    <textarea name="intro" class="padding-left-10 padding-top-10 padding-bottom-10 padding-right-40" placeholder="{{intro.content === '' ? '请简单描述情况（100字以内，选填）' : intro.content}}" />
+    <textarea name="intro" bindinput="textAreaEventListener" class="padding-left-10 padding-top-10 padding-bottom-10 padding-right-40" placeholder="{{intro.content === '' ? '请简单描述情况（100字以内，选填）' : intro.content}}" />
   </view>
   <view style="position: absolute; right: 10rpx; bottom: 0;">{{intro.length}} / 100</view>
 </view>
+
+<button class="submit" bindtap='clickReport'>提交赢奖励金</button>
+
+<cover-view class="mark vertical-middle" wx:if="{{ markShow }}">
+  <cover-view class="tip">
+    <cover-view class="tip-title">
+      信息上报成功
+    </cover-view>
+    <cover-view class="tip-content">
+      <!-- 获得5点奖励积分 -->
+      请等待审核，审核通过后积分会直接到账
+    </cover-view>
+    <!-- <cover-view class="tip-current-points">
+      <cover-view style="display: inline">
+        当前总积分为
+      </cover-view>
+      <cover-view style="display: inline; border: 1px solid #ddd; border-radius: 10rpx; background-color: #ddd;">
+        55
+      </cover-view>
+    </cover-view> -->
+    <cover-view class="tip-button btn btn-info" catchtap='closeMark'>
+      确定 
+    </cover-view>
+  </cover-view>
+</cover-view>
