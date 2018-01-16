@@ -6,7 +6,8 @@
     "pages/logs/logs",
     "pages/my/my",
     "pages/report/report",
-    "pages/member/member"
+    "pages/member/member",
+	"pages/recharge/recharge"
   ],
   "window": {
     "backgroundTextStyle": "light",

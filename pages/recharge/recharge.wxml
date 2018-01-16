@@ -1,0 +1,11 @@
+<view style="margin: 20rpx 0; background-color: #fff;">
+    <view class="themes-list-box">
+        <view class="themes-list-thumbnail">
+            <image class="themes-list-img" src="{{userInfo.avatar}}" />
+        </view>
+        <view class="themes-list-main">
+            <view class="themes-list-name">尊敬的 {{userInfo.nick_name}} </view>
+            <view class="themes-list-description">您目前还不是停车联盟成员</view>
+        </view>
+    </view>
+</view>

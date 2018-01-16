@@ -73,5 +73,10 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  clickOpenRecharge: function () {
+	  wx.navigateTo({
+		  url: '/pages/recharge/recharge',
+	  })
   }
 }) 

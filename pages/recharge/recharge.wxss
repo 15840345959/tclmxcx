@@ -1,0 +1,53 @@
+page {
+	background-color: #f1f1f1;
+}
+
+.themes-list {
+    background: #fff;
+    display: block;
+    margin-bottom: 20rpx;
+}
+
+.themes-list-box {
+    display: block;
+    position: relative;
+    padding: 32rpx 32rpx;
+}
+
+.themes-list-thumbnail {
+    position: absolute;
+    left: 32rpx;
+    top: 32rpx;
+    height: 100rpx;
+    width: 100rpx;
+	margin-left: 80rpx;
+}
+
+.themes-list-img {
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    border: 1px solid #f2f2f2;
+}
+
+.themes-list-main {
+    margin-left: 260rpx;
+}
+
+.themes-list-name {
+    font-size: 32rpx;
+    color: #606898;
+    height: 60rpx;
+    line-height: 60rpx;
+    overflow: hidden;
+    text-align: left;
+}
+
+.themes-list-description {
+    font-size: 28rpx;
+    color: #999;
+    height: 40rpx;
+    line-height: 40rpx;
+    overflow: hidden;
+    text-align: left;
+}
