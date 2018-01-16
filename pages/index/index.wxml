@@ -17,7 +17,7 @@
 </view>
 
 <block wx:if="{{indexInfo}}">
-  <view style='width: 90%; background-color: #fff; margin: 20rpx auto; height: 22 0rpx; border-radius: 20rpx; flex-direction: row; display: flex;'>
+  <view style="width: 90%; background-color: #fff; margin: 20rpx auto; height: 22 0rpx; border-radius: 20rpx; flex-direction: row; display: flex;">
     <view class="themes-list-box">
       <view class="themes-list-thumbnail" style="margin-left: 60rpx;">
         <image class="themes-list-img" style="border: none;" src="/images/police.png" />

@@ -40,27 +40,32 @@ function wxRequest(url, param, method, successCallback, errorCallback) {
 
 //获取七牛token
 function getQiniuToken(param, successCallback, errorCallback) {
-  wxRequest(SERVER_URL + '/api/user/getQiniuToken', param, "GET", successCallback, errorCallback);
+  wxRequest(SERVER_URL + '/api/user/getQiniuToken', param, "GET", successCallback, errorCallback)
 }
 
 //获取用户的OpenId
 function getOpenId(param, successCallback, errorCallback) {
-  wxRequest(SERVER_URL + '/api/user/getXCXOpenId', param, "GET", successCallback, errorCallback);
+  wxRequest(SERVER_URL + '/api/user/getXCXOpenId', param, "GET", successCallback, errorCallback)
 }
 
 //登录
 function loginServer(param, successCallback, errorCallback) {
-  wxRequest(SERVER_URL + '/api/user/login', param, "POST", successCallback, errorCallback);
+  wxRequest(SERVER_URL + '/api/user/login', param, "POST", successCallback, errorCallback)
 }
 
 //发送验证码
 function sendVertifyCode(param, successCallback, errorCallback) {
-  wxRequest(SERVER_URL + '/api/user/sendVertifyCode', param, "POST", successCallback, errorCallback);
+  wxRequest(SERVER_URL + '/api/user/sendVertifyCode', param, "POST", successCallback, errorCallback)
 }
 
 //注册
 function register(param, successCallback, errorCallback) {
-  wxRequest(SERVER_URL + '/api/user/register', param, "POST", successCallback, errorCallback);
+  wxRequest(SERVER_URL + '/api/user/register', param, "POST", successCallback, errorCallback)
+}
+
+function getById(param, successCallback, errorCallback) {
+  wxRequest(SERVER_URL + '/api/user/getById', param, "GET", successCallback, errorCallback)
+  
 }
 
 //获取首页轮播图
@@ -81,6 +86,16 @@ function getAddress(param, successCallback, errorCallback) {
 //上报信息
 function uploadInfo(param, successCallback, errorCallback) {
   wxRequest(SERVER_URL + '/api/busi/uploadInfo', param, "POST", successCallback, errorCallback);
+}
+
+//获取会员充值信息
+function getMemberLevel(param, successCallback, errorCallback) {
+  wxRequest(SERVER_URL + '/api/recharge/getMemberLevel', param, "GET", successCallback, errorCallback);
+}
+
+//订购会员
+function beMember(param, successCallback, errorCallback) {
+  wxRequest(SERVER_URL + '/api/wechat/beMember', param, "POST", successCallback, errorCallback);
 }
 
 // 转换真实地址
@@ -472,13 +487,14 @@ module.exports = {
   loginServer: loginServer,
   register: register,
   sendVertifyCode: sendVertifyCode,
+  getById: getById,
 
   getIndexADs: getIndexADs,
   getIndexInfo: getIndexInfo,
-
   getAddress: getAddress,
-
   uploadInfo: uploadInfo,
+  getMemberLevel: getMemberLevel,
+  beMember: beMember,
 
   getImgRealUrl: getImgRealUrl,
 

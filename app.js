@@ -124,5 +124,14 @@ App({
       lon: ""
     },
     addressComponent: {}
+  },
+  addListener: function (callback) {
+    this.callback = callback
+  },
+  setChangedData: function (data) {
+    this.data = data
+    if (this.callback != null) {
+      this.callback(data)
+    }
   }
 })

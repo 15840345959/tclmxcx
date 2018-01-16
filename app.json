@@ -7,7 +7,8 @@
     "pages/my/my",
     "pages/report/report",
     "pages/member/member",
-	"pages/recharge/recharge"
+	  "pages/recharge/recharge",
+    "pages/result/result"
   ],
   "window": {
     "backgroundTextStyle": "light",
