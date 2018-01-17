@@ -1,0 +1,27 @@
+<map id="map" longitude="{{ userLocation.lon }}" latitude="{{ userLocation.lat }}" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location
+  style="width: 100%; height: 260px;">
+  <cover-view style="width: 90%; height: 66px; background-color: #fff; margin: 180px auto auto auto; border-radius: 20rpx; text-align: center; border: 2rpx solid #ddd;">
+    <cover-view style="height: 50%; text-algin: center; display: flex; justify-content: center; align-items: center;">
+      <cover-view style="min-width: 30%; min-height: 48rpx; display: inline-block; border: 1px solid transparent; border-radius: 6px;  background-color: #ff8159; color: #fff; margin: auto; line-height: 48rpx; font-size: 28rpx;" bindtap='clickGetLocation'>定位当前位置</cover-view>
+    </cover-view>
+    <cover-view style="height: 0; border: 0.5rpx solid #ddd; width: 90%; margin: 0 auto;"></cover-view>
+    <cover-view style="height: 50%; text-algin: center;">
+      <cover-view style="width: 90%; height: 100%; border-top: none; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
+        <cover-view style="display: inline-block; color: #000; margin: auto; font-size: 28rpx;">{{addressComponent.street}}{{addressComponent.direction}}</cover-view>
+      </cover-view>
+    </cover-view>
+  </cover-view>
+</map>
+
+<picker bindchange="bindPickerChange" value="{{index}}" range="{{timeLimitArray}}" style="margin-top: 20rpx;" >
+  <view class="weui-cells weui-cells_after-title">
+    <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <view class="weui-cell__bd">停车时间</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">{{timeLimitArray[index]}} 小时</view>
+    </view>
+  </view>
+</picker>
+
+<view style="padding: 40rpx; text-align: center; font-size: 32rpx; color: #999;">5公里范围内有警察贴条，我们会以微信或短信的形式通知您，请时刻查看手机</view>
+
+<button class="submit" bindtap='clickPark'>偷停</button>

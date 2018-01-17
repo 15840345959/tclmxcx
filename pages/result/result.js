@@ -80,7 +80,7 @@ Page({
 
   },
   clickBack: function () {
-    event.emit('refresh', '')
+    event.sendEvent('refresh', '')
 
     wx.navigateBack({})
   }

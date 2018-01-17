@@ -17,7 +17,7 @@ Page({
     },
     addressComponent: {},
     markers: [
-      
+
     ],
     controls: [
       // {
@@ -70,7 +70,7 @@ Page({
   },
   chooseImage: function () {
 
-    if(vm.data.files.length >= 1) {
+    if (vm.data.files.length >= 1) {
 
       wx.showModal({
         title: '提示信息',
@@ -183,7 +183,7 @@ Page({
     param.district = vm.data.addressComponent.district
     param.street = vm.data.addressComponent.street
     param.position = vm.data.addressComponent.province + vm.data.addressComponent.city + vm.data.addressComponent.district + vm.data.addressComponent.street
-    
+
     if (vm.data.intro.length !== 0) {
       param.desc = vm.data.intro.content
     }
@@ -196,9 +196,13 @@ Page({
     util.uploadInfo(param, function (ret) {
       console.log('uploadInfo ret is : ' + JSON.stringify(ret))
 
+      event.sendEvent('refreshIndexInfo', '')
+
       vm.setData({
         markShow: true
       })
+
+
 
     }, function (err) {
       console.log('uploadInfo err is : ' + JSON.stringify(err))

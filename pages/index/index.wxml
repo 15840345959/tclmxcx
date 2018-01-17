@@ -11,12 +11,12 @@
   <view bindtap='clickOpenReport' style="width: 50%; text-align: center; line-height: 70rpx; display: inline-block; color: #686868; font-size: 34rpx; margin-top: 20rpx;">
     信息上报
   </view>
-  <view style="width: 50%; text-align: center; line-height: 70rpx; display: inline-block; color: #686868; font-size: 34rpx; margin-top: 20rpx; margin-left: -1rpx; border-left: 1rpx solid #e2e2e2;">
+  <view bindtap='clickOpenPark' style="width: 50%; text-align: center; line-height: 70rpx; display: inline-block; color: #686868; font-size: 34rpx; margin-top: 20rpx; margin-left: -1rpx; border-left: 1rpx solid #e2e2e2;">
     偷停一会
   </view>
 </view>
 
-<block wx:if="{{indexInfo}}">
+<block wx:if="{{indexInfo.length > 0}}">
   <view style="width: 90%; background-color: #fff; margin: 20rpx auto; height: 22 0rpx; border-radius: 20rpx; flex-direction: row; display: flex;">
     <view class="themes-list-box">
       <view class="themes-list-thumbnail" style="margin-left: 60rpx;">

@@ -54,13 +54,20 @@ Page({
 	onLoad: function (options) {
 		vm = this;
 
+    var globalDataUserInfo = app.globalData.userInfo
+
+    var due_timestamp = Date.parse(app.globalData.userInfo.member_due)
+    var now_timestamp = Date.parse(new Date())
+
+    globalDataUserInfo.expire = Math.floor((due_timestamp - now_timestamp) / 86400000)
+    
 		vm.setData({
 			userInfo: app.globalData.userInfo
 		})
 
 		vm.getMemberLevel()
 
-		event.on('refresh', this, this.refresh.bind(this))
+    event.addEventListener('refresh', this, this.refresh.bind(this))
 	},
 	refresh: function (data) {
 		vm.getMemberLevel()
@@ -90,7 +97,7 @@ Page({
 	 * 生命周期函数--监听页面卸载
 	 */
 	onUnload: function () {
-		event.remove('refresh', this, this.refresh.bind(this));
+    event.removeEventListener('refresh', this, this.refresh.bind(this));
 	},
 
 	/**

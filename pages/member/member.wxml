@@ -6,12 +6,15 @@
         <image src="{{userInfo.avatar}}" style="border-radius: 50%; height: 100%; width: 100%;"></image>
     </view>
     <view style="text-align: center; margin-top: 40rpx; color: #000; font-size: 34rpx;">{{userInfo.nick_name}}</view>
-    <view wx:if="{{userInfo.level === 0}}" style='height: 80rpx; width: 140rpx; margin: 20rpx auto;'>
-        <view style="text-align: center; background-color: #ffc107; color: #fff; border-radius: 20rpx; padding: 6rpx 20rpx;" bindtap="clickOpenRecharge">办理会员</view>
+    <view wx:if="{{userInfo.level === 0}}" style='height: 100rpx; width: 160rpx; margin: 20rpx auto;'>
+        <view style="text-align: center; background-color: #ffc107; color: #fff; border-radius: 20rpx; padding: 8rpx 32rpx; font-size: 24rpx;" bindtap="clickOpenRecharge">办理会员</view>
+    </view>
+    <view wx:else="" style='height: 100rpx; width: 160rpx; margin: 20rpx auto;'>
+        <view style="text-align: center; background-color: #ffc107; color: #fff; border-radius: 20rpx; padding: 8rpx 32rpx; font-size: 24rpx;" bindtap="clickOpenRecharge">续费会员</view>
     </view>
 </view>
 
-<view class="weui-cells weui-cells_after-title">
+<view class="weui-cells weui-cells_after-title" style="margin-top: 20rpx;">
     <navigator class="weui-cell weui-cell_access" hover-class="weui-cell_active">
         <view class="weui-cell__bd">积分兑换</view>
         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
@@ -33,3 +36,4 @@
         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
     </navigator>
 </view>
+

@@ -1,6 +1,6 @@
 var events = {};
 
-function on (name, self, callback) {
+function addEventListener (name, self, callback) {
   var tuple = [self, callback]
   var callbacks = events[name]
   if (Array.isArray(callbacks)) {
@@ -11,7 +11,7 @@ function on (name, self, callback) {
   }
 }
 
-function remove(name, self, callback) {
+function removeEventListener (name, self, callback) {
   var callbacks = events[name]
   if (Array.isArray(callbacks)) {
     events[name] = callbacks.filter((tuple) => {
@@ -20,7 +20,7 @@ function remove(name, self, callback) {
   }
 }
 
-function emit (name, data) {
+function sendEvent (name, data) {
   var callbacks = events[name];
   if (Array.isArray(callbacks)) {
     callbacks.map((tuple) => {
@@ -31,6 +31,6 @@ function emit (name, data) {
   }
 }
 
-exports.on = on
-exports.remove = remove
-exports.emit = emit
+exports.addEventListener = addEventListener
+exports.removeEventListener = removeEventListener
+exports.sendEvent = sendEvent

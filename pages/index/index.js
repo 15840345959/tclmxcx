@@ -20,6 +20,9 @@ Page({
   onLoad: function (options) {
     
     vm = this;
+
+    this.getByIdWithToken()
+
     this.getIndexADs()
 
     wx.getLocation({
@@ -40,6 +43,9 @@ Page({
         
       }
     })
+  },
+  refreshIndexInfo: function () {
+    vm.getIndexInfo()
   },
 
   /**
@@ -92,6 +98,8 @@ Page({
         indexInfo: data
       })
       
+      console.log('getIndexInfo is : ' + JSON.stringify(data))
+
     }, function (err) {
 
     })
@@ -117,6 +125,78 @@ Page({
   clickOpenReport: function () {
     wx.navigateTo({
       url: '/pages/report/report',
+    })
+  },
+  clickOpenPark: function () {
+
+    var due_timestamp = Date.parse(app.globalData.userInfo.member_due)
+    var now_timestamp = Date.parse(new Date())
+
+    if (now_timestamp > due_timestamp) {
+      console.log('会员已过期')
+      
+      wx.showModal({
+        title: '你还不是停车联盟会员',
+        content: '成为会员后可使用本功能',
+        confirmText: '成为会员',
+        confirmColor: '#606898',
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+
+            wx.navigateTo({
+              url: '/pages/recharge/recharge',
+            })
+
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+
+
+          }
+        }
+      })
+
+    } else {
+      console.log('会员未过期')
+
+      wx.navigateTo({
+        url: '/pages/park/park',
+      })
+
+    }
+
+
+    
+  },
+  getByIdWithToken: function () {
+    util.getByIdWithToken({ id: app.globalData.userInfo.id}, function (ret) {
+      console.log('getByIdWithToken ret is : ' + JSON.stringify(ret))
+
+      wx.setStorage({
+        key: "userInfo",
+        data: ret.data.ret
+      })
+
+      app.globalData.userInfo = ret.data.ret
+
+      var stroage_userInfo = wx.getStorageSync('userInfo')
+
+      console.log('stroage_userInfo is : ' + JSON.stringify(stroage_userInfo))
+
+      console.log('globalData userInfo is : ' + JSON.stringify(app.globalData.userInfo))
+
+      var due_timestamp = Date.parse(app.globalData.userInfo.member_due)
+      var now_timestamp = Date.parse(new Date())
+
+      if (now_timestamp > due_timestamp) {
+        console.log('会员已过期')
+      } else {
+        console.log('会员未过期')
+      }
+
+
+    }, function (err) {
+      console.log('getByIdWithToken err is : ' + JSON.stringify(err))
     })
   }
 })

@@ -1,6 +1,6 @@
 /**index.wxss**/
 page {
-  background: #F1F1F1;
+  background-color: #F1F1F1;
 }
 .slide-image {
   height: 100%;
