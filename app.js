@@ -16,6 +16,9 @@ App({
     } else {
       vm.globalData.userInfo = wx.getStorageSync("userInfo");
       console.log("vm.globalData.userInfo:" + JSON.stringify(vm.globalData.userInfo));
+
+		
+
     }
   },
   //微信登录

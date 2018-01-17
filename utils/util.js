@@ -63,6 +63,7 @@ function register(param, successCallback, errorCallback) {
   wxRequest(SERVER_URL + '/api/user/register', param, "POST", successCallback, errorCallback)
 }
 
+//获取用户信息
 function getById(param, successCallback, errorCallback) {
   wxRequest(SERVER_URL + '/api/user/getById', param, "GET", successCallback, errorCallback)
   
