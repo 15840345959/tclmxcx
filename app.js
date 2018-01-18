@@ -17,6 +17,11 @@ App({
       vm.globalData.userInfo = wx.getStorageSync("userInfo");
       console.log("vm.globalData.userInfo:" + JSON.stringify(vm.globalData.userInfo));
 
+	  wx.getUserInfo({
+		  success: function (res) {
+			  console.log('getUserInfo res is : ' + JSON.stringify(res))
+		  }
+	  })
 		
 
     }
