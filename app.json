@@ -1,6 +1,5 @@
 {
   "pages": [
-  
     "pages/index/index",
     "pages/register/register",
     "pages/logs/logs",
@@ -9,8 +8,11 @@
     "pages/member/member",
 	  "pages/recharge/recharge",
     "pages/result/result",
-    "pages/park/park"
-  ],
+    "pages/park/park",
+    "pages/verify/verify",
+    "pages/message/message",
+    "pages/personal/personal"
+  ],                    
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#60689B",

@@ -1,0 +1,18 @@
+<view style='width: 90%; background-color: #fff; margin: 20rpx auto 40rpx auto; border-radius: 20rpx;'>
+  <block wx:if="{{message.length !== 0}}">
+    <view class="themes-list-box" wx:for="{{message}}" >
+      <view class="themes-list-thumbnail">
+          <image class="themes-list-img" src="{{item.img}}" />
+      </view>
+      <view class="themes-list-main">
+          <view class="themes-list-name">{{item.street}}正在贴条，请速挪车</view>
+          <view class="themes-list-description">{{item.diff_time}}</view>
+      </view>
+    </view>
+  </block>
+  <block wx:else="" >
+    <view style="display: flex; justify-content: center; align-items: center;">
+      <image src="/images/no_data.png" class="no-data-image" style='padding: 40rpx;'/>
+    </view>
+  </block>
+</view>

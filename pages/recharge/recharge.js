@@ -56,6 +56,8 @@ Page({
 
     var globalDataUserInfo = app.globalData.userInfo
 
+    console.log('recharge globalDataUserInfo is : ' + JSON.stringify(globalDataUserInfo))
+
     var due_timestamp = Date.parse(app.globalData.userInfo.member_due)
     var now_timestamp = Date.parse(new Date())
 
@@ -139,18 +141,31 @@ Page({
 
 		vm.beMember(id)
 	},
-	getById: function () {
+  getByIdWithToken: function () {
 		var param = {
-			id: vm.userInfo.id
+			id: vm.data.userInfo.id
 		}
 
-		util.getById(param, function (ret) {
+    util.getByIdWithToken(param, function (ret) {
 			wx.setStorage({
 				key: "userInfo",
 				data: ret.data.ret
 			})
 			
-			app.globalData.userInfo = ret.data.ret
+      var due_timestamp = Date.parse(ret.data.ret.member_due)
+      var now_timestamp = Date.parse(new Date())
+
+      ret.data.ret.expire = Math.floor((due_timestamp - now_timestamp) / 86400000)
+
+      console.log('recharge ret is : ' + JSON.stringify(ret.data.ret))
+
+      app.globalData.userInfo = ret.data.ret
+
+      vm.setData({
+        userInfo: ret.data.ret
+      })
+
+      console.log('recharge userInfo is : ' + JSON.stringify(vm.data.userInfo))
 
 		}, function (err) {
 
@@ -175,7 +190,7 @@ Page({
 				'success': function (res) {
 					console.log('requestPayment success res is : ' + JSON.stringify(res))
 
-					vm.getById()
+          vm.getByIdWithToken()
 
 					wx.navigateTo({
 						url: '/pages/result/result?result=success'
@@ -184,7 +199,7 @@ Page({
 				'fail': function (res) {
 					console.log('requestPayment fail res is : ' + JSON.stringify(res))
 
-					vm.getById()
+          vm.getByIdWithToken()
 					
 					wx.navigateTo({
 						url: '/pages/result/result?result=fail'

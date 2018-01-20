@@ -13,15 +13,15 @@
   </cover-view>
 </map>
 
-<picker bindchange="bindPickerChange" value="{{index}}" range="{{timeLimitArray}}" style="margin-top: 20rpx;" >
+<picker bindchange="bindPickerChange" value="{{index}}" range="{{timeLimitChineseArray}}" style="margin-top: 20rpx;" >
   <view class="weui-cells weui-cells_after-title">
     <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
       <view class="weui-cell__bd">停车时间</view>
-      <view class="weui-cell__ft weui-cell__ft_in-access">{{timeLimitArray[index]}} 小时</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">{{timeLimitChineseArray[index]}}</view>
     </view>
   </view>
 </picker>
 
 <view style="padding: 40rpx; text-align: center; font-size: 32rpx; color: #999;">5公里范围内有警察贴条，我们会以微信或短信的形式通知您，请时刻查看手机</view>
 
-<button class="submit" bindtap='clickPark'>偷停</button>
+<button class="submit" bindtap='clickPark'>上报停车位置</button>

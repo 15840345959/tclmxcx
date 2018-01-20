@@ -18,11 +18,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    vm = this;
+    vm = this
 
-    console.log('member globalDataUserInfo is : ' + JSON.stringify(app.globalData.userInfo))
+    console.log('personal globalDataUserInfo is : ' + JSON.stringify(app.globalData.userInfo))
 
-    this.getByIdWithToken()
+    this.setData({
+      userInfo: app.globalData.userInfo
+    })
   },
 
   /**
@@ -72,29 +74,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  clickOpenRecharge: function () {
-	  wx.navigateTo({
-		  url: '/pages/recharge/recharge',
-	  })
-  },
-  getByIdWithToken: function () {
-    util.getByIdWithToken({ id: app.globalData.userInfo.id }, function (ret) {
-      console.log('getByIdWithToken ret is : ' + JSON.stringify(ret))
-
-      wx.setStorage({
-        key: "userInfo",
-        data: ret.data.ret
-      })
-
-      app.globalData.userInfo = ret.data.ret
-
-      vm.setData({
-        userInfo: app.globalData.userInfo
-      })
-
-    }, function (err) {
-      console.log('getByIdWithToken err is : ' + JSON.stringify(err))
-    })
-  },
+  }
 }) 

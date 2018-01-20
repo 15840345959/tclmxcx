@@ -1,0 +1,28 @@
+<view class="weui-cells weui-cells_after-title" style="margin-top: 20rpx;" >
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__bd">头像</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access" style="display: flex; justify-content: center; align-items: center;">
+      <image src="{{userInfo.avatar}}" style="width: 60px; height: 60px; border-radius: 20rpx;" ></image>
+    </view>
+  </view>
+  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__bd">昵称</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userInfo.nick_name}}</view>
+  </navigator>
+  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__bd">手机</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userInfo.phonenum}}</view>
+  </navigator>
+  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__bd">性别</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userInfo.gender}}</view>
+  </navigator>
+  <!-- <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__bd">地区</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userInfo.nick_name}}</view>
+  </navigator>
+  <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <view class="weui-cell__bd">邮箱</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userInfo.nick_name}}</view>
+  </navigator> -->
+</view>

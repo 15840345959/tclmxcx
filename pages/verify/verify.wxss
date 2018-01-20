@@ -1,0 +1,28 @@
+page {
+	background-color: #f1f1f1;
+}
+
+.grid {
+  display: flex;
+}
+
+.grid-cell {
+  flex: 1;
+}
+
+.delete_btn {
+  position: absolute;
+  right: -16rpx;
+  top: -16rpx;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.submit {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #60689b;
+  color: #fff;
+  border-radius: 0;
+}

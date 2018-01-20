@@ -1,0 +1,7 @@
+page {
+  background-color: #F1F1F1;
+}
+
+.weui-cell__ft_in-access {
+  padding-right: 20px;
+}

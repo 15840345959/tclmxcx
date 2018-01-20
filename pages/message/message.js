@@ -11,18 +11,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: {}
+    userInfo: {},
+    message: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    vm = this;
+    vm = this
 
     console.log('member globalDataUserInfo is : ' + JSON.stringify(app.globalData.userInfo))
 
-    this.getByIdWithToken()
+    this.getIndexInfo({'city': '沈阳市'})
   },
 
   /**
@@ -73,28 +74,23 @@ Page({
   onShareAppMessage: function () {
 
   },
-  clickOpenRecharge: function () {
-	  wx.navigateTo({
-		  url: '/pages/recharge/recharge',
-	  })
-  },
-  getByIdWithToken: function () {
-    util.getByIdWithToken({ id: app.globalData.userInfo.id }, function (ret) {
-      console.log('getByIdWithToken ret is : ' + JSON.stringify(ret))
+  getIndexInfo: function (param) {
+    console.log('getIndexInfo begin')
+    util.getIndexInfo(param, function (ret) {
+      var data = ret.data.ret
+      console.log('getIndexInfo data is : ' + JSON.stringify(data))
 
-      wx.setStorage({
-        key: "userInfo",
-        data: ret.data.ret
-      })
-
-      app.globalData.userInfo = ret.data.ret
+      for (var i = 0; i < data.length; i++) {
+        data[i].diff_time = util.getDiffentTime(data[i].created_at, Date.parse(new Date()))
+      }
 
       vm.setData({
-        userInfo: app.globalData.userInfo
+        message: data
       })
 
+      console.log('getIndexInfo is : ' + JSON.stringify(data))
     }, function (err) {
-      console.log('getByIdWithToken err is : ' + JSON.stringify(err))
+
     })
-  },
+  }
 }) 

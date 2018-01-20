@@ -14,7 +14,8 @@ Page({
   data: {
     userInfo: {},
     timeLimit: 1,
-    timeLimitArray: [1, 2, 3, 4, 5],
+    timeLimitChineseArray: ['30分钟', '1小时', '2小时', '3小时'],
+    timeLimitArray: [0.5, 1, 2, 3],
     index: 0,
     userLocation: {
       lat: "",
@@ -24,6 +25,7 @@ Page({
 
     ],
     addressComponent: {},
+    is_verify: false
   },
 
 	/**
@@ -37,8 +39,6 @@ Page({
     })
 
     this.getGlobalLocation()
-
-    
   },
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
@@ -89,6 +89,9 @@ Page({
 
   },
   bindPickerChange: function (e) {
+
+    console.log('bindPickerChange value is : ' + e.detail.value)
+
     this.setData({
       index: e.detail.value
     })
@@ -133,7 +136,6 @@ Page({
         userLocation.lat = latitude
         userLocation.lon = longitude
 
-
         app.globalData.userLocation = userLocation
 
         vm.getGlobalLocation()
@@ -141,27 +143,59 @@ Page({
     })
   },
   clickPark: function () {
+    vm.certificationByUserId()
+  },
+  certificationByUserId: function () {
+    util.certificationByUserId({}, function (ret) {
+      if (ret.data.result) {
+        var is_verify = ret.data.ret.status
 
-    console.log('addressComponent is : ' + JSON.stringify(vm.data.addressComponent))
-    console.log('userLocation is : ' + JSON.stringify(vm.data.userLocation))
-    console.log('index is : ' + JSON.stringify(vm.data.index))
+        console.log('is_verify is : ' + JSON.stringify(is_verify))
 
-    var param = {}
-    param.lon = vm.data.userLocation.lon
-    param.lat = vm.data.userLocation.lat
-    param.plan_due = vm.data.timeLimitArray[vm.data.index]
-    param.province = vm.data.addressComponent.province
-    param.city = vm.data.addressComponent.city
-    param.district = vm.data.addressComponent.district
-    param.street = vm.data.addressComponent.street
-    param.position = vm.data.addressComponent.province + vm.data.addressComponent.city + vm.data.addressComponent.district + vm.data.addressComponent.street
+        if (is_verify) {
+          console.log('addressComponent is : ' + JSON.stringify(vm.data.addressComponent))
+          console.log('userLocation is : ' + JSON.stringify(vm.data.userLocation))
+          console.log('index is : ' + JSON.stringify(vm.data.index))
 
-    console.log('parkingCar param is : ' + JSON.stringify(param))
+          var param = {}
+          param.lon = vm.data.userLocation.lon
+          param.lat = vm.data.userLocation.lat
+          param.plan_due = vm.data.timeLimitArray[vm.data.index]
+          param.province = vm.data.addressComponent.province
+          param.city = vm.data.addressComponent.city
+          param.district = vm.data.addressComponent.district
+          param.street = vm.data.addressComponent.street
+          param.position = vm.data.addressComponent.province + vm.data.addressComponent.city + vm.data.addressComponent.district + vm.data.addressComponent.street
 
-    util.parkingCar(param, function (ret) {
-      console.log('clickPark ret is : ' + JSON.stringify(ret))
+          console.log('parkingCar param is : ' + JSON.stringify(param))
+
+          util.parkingCar(param, function (ret) {
+            console.log('clickPark ret is : ' + JSON.stringify(ret))
+          }, function (err) {
+            console.log('clickPark err is : ' + JSON.stringify(err))
+          })
+        } else {
+          wx.showModal({
+            title: '提示信息',
+            content: '您还为进行车主认证，进行认证之后可以使用此功能',
+            confirmText: '立即认证',
+            showCancel: true,
+            success: function (res) {
+              if (res.confirm) {
+                wx.navigateTo({
+                  url: '/pages/verify/verify',
+                })
+              } else if (res.cancel) {
+
+              }
+            }
+          })
+        }
+      } else {
+
+      }
     }, function (err) {
-      console.log('clickPark err is : ' + JSON.stringify(err))
+
     })
   }
 }) 

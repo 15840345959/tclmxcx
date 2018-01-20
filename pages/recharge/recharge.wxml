@@ -5,7 +5,7 @@
         </view>
         <view class="themes-list-main">
             <view class="themes-list-name">尊敬的 {{userInfo.nick_name}} </view>
-            <view wx:if="{{ userInfo.expire < 0 }}" class="themes-list-description">您目前还不是停车联盟会员 {{refresh}}</view>
+            <view wx:if="{{ userInfo.level === '0' }}" class="themes-list-description">您目前还不是停车联盟会员 {{refresh}}</view>
             <view wx:else="" class="themes-list-description">您的会员还有 {{userInfo.expire}} 天到期</view>
         </view>
     </view>

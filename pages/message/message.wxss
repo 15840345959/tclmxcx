@@ -1,17 +1,5 @@
-/**index.wxss**/
-
 page {
-  background-color: #f1f1f1;
-}
-
-.slide-image {
-  height: 100%;
-  width: 100%;
-}
-
-.model {
-  background: #fff;
-  border-radius: 10%;
+  background-color: #F1F1F1;
 }
 
 .themes-list {

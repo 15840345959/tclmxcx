@@ -1,3 +1,6 @@
+/* page {
+	background-color: #f1f1f1;
+} */
 
 .delete_btn {
   position: absolute;
@@ -40,7 +43,7 @@ textarea {
 }
 
 .submit {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   background-color: #60689b;

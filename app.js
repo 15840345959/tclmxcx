@@ -16,14 +16,6 @@ App({
     } else {
       vm.globalData.userInfo = wx.getStorageSync("userInfo");
       console.log("vm.globalData.userInfo:" + JSON.stringify(vm.globalData.userInfo));
-
-	  wx.getUserInfo({
-		  success: function (res) {
-			  console.log('getUserInfo res is : ' + JSON.stringify(res))
-		  }
-	  })
-		
-
     }
   },
   //微信登录
@@ -32,25 +24,70 @@ App({
       success: function (res) {
         console.log("wx.login:" + JSON.stringify(res))
         if (res.code) {
-          util.getOpenId({ code: res.code }, function (ret) {
-            console.log("getOpenId:" + JSON.stringify(ret))
-            var openId = ret.data.ret.openid;
-            var param = {
-              xcx_openid: openId,
-              account_type: "xcx"
-            }
-            //通过openid到后端获取用户信息
-            util.loginServer(param, function (ret) {
-              console.log("login:" + JSON.stringify(ret));
-              //如果后台存在该用户数据，则代表已经注册，在本地建立缓存，下次无需二次登录校验
-              if (ret.data.code == "200" && ret.data.result == true) {
-                vm.storeUserInfo(ret.data.ret)
-              } else {
-                //否则引导用户至注册页面
-                util.navigateToRegister(param); //将param传递到register页面以便完成后续注册流程
+          var code = res.code
+          console.log('login code is : ' + JSON.stringify(code))
+          wx.getUserInfo({
+            success: function (res) {
+              console.log('getUserInfo res is : ' + JSON.stringify(res))
+              var encryptedData = res.encryptedData.replace('+','fuckfuckfuck')
+              var iv = res.iv.replace('+', 'fuckfuckfuck')
+              var getUnionIdParam = {
+                code: code,
+                // encryptedData: encodeURIComponent(res.encryptedData),
+                encryptedData: encryptedData,
+                iv: iv
               }
-            }, null);
-          }, null);
+
+              console.log('getUnionIdParam is : ' + JSON.stringify(getUnionIdParam))
+
+              util.getUnionId(getUnionIdParam, function (ret) {
+                console.log('getUnionId ret is : ' + JSON.stringify(ret))
+
+                var loginServerParam = {
+                  xcx_openid: ret.data.ret.openId,
+                  account_type: "xcx",
+                  unionid: ret.data.ret.unionId
+                }
+
+                console.log('loginServerParam is : ' + JSON.stringify(loginServerParam))
+
+                util.loginServer(loginServerParam, function (ret) {
+                  console.log("login:" + JSON.stringify(ret));
+                  //如果后台存在该用户数据，则代表已经注册，在本地建立缓存，下次无需二次登录校验
+                  if (ret.data.code == "200" && ret.data.result == true) {
+                    vm.storeUserInfo(ret.data.ret)
+                  } else {
+                    //否则引导用户至注册页面
+                    util.navigateToRegister(loginServerParam); //将param传递到register页面以便完成后续注册流程
+                  }
+                }, null);
+
+              }, function (err) {
+                console.log('getUnionId err is : ' + JSON.stringify(err))
+              })
+
+            }
+          })
+
+          // util.getOpenId({ code: res.code }, function (ret) {
+          //   console.log("getOpenId:" + JSON.stringify(ret))
+          //   var openId = ret.data.ret.openid;
+          //   var param = {
+          //     xcx_openid: openId,
+          //     account_type: "xcx"
+          //   }
+          //   //通过openid到后端获取用户信息
+            // util.loginServer(param, function (ret) {
+            //   console.log("login:" + JSON.stringify(ret));
+            //   //如果后台存在该用户数据，则代表已经注册，在本地建立缓存，下次无需二次登录校验
+            //   if (ret.data.code == "200" && ret.data.result == true) {
+            //     vm.storeUserInfo(ret.data.ret)
+            //   } else {
+            //     //否则引导用户至注册页面
+            //     util.navigateToRegister(param); //将param传递到register页面以便完成后续注册流程
+            //   }
+            // }, null);
+          // }, null);
         }
       }
     })
@@ -59,7 +96,7 @@ App({
   onShow: function () {
     //获取用户地理位置
     wx.getLocation({
-      type: 'wgs84',
+      type: 'gcj02 ',
       success: function (res) {
         console.log('getLocation res is : ' + JSON.stringify(res))
         var latitude = res.latitude

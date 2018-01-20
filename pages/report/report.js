@@ -1,5 +1,6 @@
 const util = require('../../utils/util.js')
 const qiniuUploader = require('../../utils/qiniuUploader.js')
+const event = require('../../utils/event.js')
 
 var vm = null
 var app = getApp()
@@ -40,20 +41,28 @@ Page({
   },
   getGlobalLocation: function () {
     var userLocation = app.globalData.userLocation
+    var converLocation = util.gcj02towgs84(userLocation.lon, userLocation.lat)
+
+    console.log('userLocation is : ' + JSON.stringify(userLocation))
+    console.log('converLocation is : ' + JSON.stringify(converLocation))
+
     var addressComponent = app.globalData.addressComponent
     vm.setData({
-      userLocation: userLocation,
+      userLocation: converLocation,
       addressComponent: addressComponent,
+    })
+
+    vm.setData({
       markers: [{
         iconPath: "/images/position.png",
         id: 0,
-        latitude: app.globalData.userLocation.lat,
-        longitude: app.globalData.userLocation.lon,
+        latitude: converLocation.lat,
+        longitude: converLocation.lon,
         width: 30,
         height: 30
       }]
     })
-
+    
     console.log('data is : ' + JSON.stringify(vm.data))
   },
   regionchange(e) {
@@ -258,6 +267,35 @@ Page({
     })
 
     wx.navigateBack({})
-  }
+  },
+  clickUpLoadStreet: function () {
+    wx.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        var tempFilePaths = res.tempFilePaths
+        console.log('tempFilePaths is ' + JSON.stringify(tempFilePaths))
 
+        util.getQiniuToken({}, function (ret) {
+          console.log('getQiniuToken ret is : ' + JSON.stringify(ret))
+          vm.initQiniu(ret.data.ret)
+          var filePaths = tempFilePaths[0]
+          qiniuUploader.upload(filePaths, (res) => {
+            console.log("qiniuUploader res is : " + JSON.stringify(res))
+            var realUrl = util.getImgRealUrl(res.key)
+            console.log('realUrl is : ' + realUrl)
+            vm.setData({
+              'files[0]': realUrl
+            })
+          }, (error) => {
+            console.error('qiniuUploader error is : ' + JSON.stringify(error))
+          })
+        }, function (err) {
+
+        })
+      }
+    })
+  }
 })
