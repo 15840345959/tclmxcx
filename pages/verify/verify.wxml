@@ -4,7 +4,7 @@
       <view class="weui-label">车主姓名</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" style="text-align: right;" placeholder="车主姓名" value="{{owner_name}}" bindinput="ownerNameListener"/>
+      <input class="weui-input" style="text-align: right;" placeholder="车主姓名" value="{{owner_name}}" bindinput="ownerNameListener" disabled="{{ is_verify }}" />
     </view>
   </view>
 
@@ -13,23 +13,35 @@
       <view class="weui-label">车牌号码</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" style="text-align: right;" placeholder="车牌号码" value="{{car_license}}" bindinput="carLicenseListener"/>
+      <input class="weui-input" style="text-align: right;" placeholder="车牌号码" value="{{car_license}}" bindinput="carLicenseListener" disabled="{{ is_verify }}" />
     </view>
   </view>
-  <view class="weui-cell weui-cell_select">
-    <view class="weui-cell__hd weui-cell__hd_in-select-after">
-      <view class="weui-label">车辆品牌</view>
+  <block wx:if="{{is_verify}}">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">车辆品牌</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input class="weui-input" style="text-align: right;" placeholder="车辆品牌" value="{{carBrandArray[carBrandIndex]}}" disabled="{{ is_verify }}" />
+      </view>
     </view>
-    <view class="weui-cell__bd">
-      <picker bindchange="bindCarBrandChange" value="{{carBrandIndex}}" range="{{carBrandArray}}">
-        <view class="weui-select weui-select_in-select-after" style="text-align: right;">{{carBrandArray[carBrandIndex]}}</view>
-      </picker>
+  </block>
+  <block wx:else="">
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__hd weui-cell__hd_in-select-after">
+        <view class="weui-label">车辆品牌</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker bindchange="bindCarBrandChange" value="{{carBrandIndex}}" range="{{carBrandArray}}">
+          <view class="weui-select weui-select_in-select-after" style="text-align: right;">{{carBrandArray[carBrandIndex]}}</view>
+        </picker>
+      </view>
     </view>
-  </view>
+  </block>
 </view>
 
-<view style="background-color: #fff;">
-  <view style="text-align: center; font-size: 48rpx; color: #686868; padding: 0 10rpx;">上传行驶证照片</view>
+<view style="background-color: #fff; {{is_verify === true ? 'padding-top: 40rpx;' : ''}}">
+  <view wx:if="{{!is_verify}}" style="text-align: center; font-size: 48rpx; color: #686868; padding: 0 10rpx;">上传行驶证照片</view>
   <view style="width: 85%; height: 360rpx; border: 1px dashed #61689c; border-radius: 20rpx; margin: 0 auto; padding: 20rpx; display: flex; justify-content: center; align-items: center; background-color: #eee;" bindtap="clickUpLoadFront">
     <block wx:if="{{xsz_image[0] === ''}}">
       <image src="/images/add.png" style="width: 150rpx; height: 150rpx;"></image>
@@ -38,7 +50,10 @@
       <image src="{{xsz_image[0]}}" style="width: 100%; height: 100%;"></image>
     </block>
   </view>
-  <view style="text-align: center; font-size: 36rpx; color: #686868; padding: 0 20rpx;">行驶证正面照片</view>
+  <view style="text-align: center; font-size: 36rpx; color: #686868; padding: 0 20rpx;">
+    <view wx:if="{{!is_verify}}">点击上传行驶证正面照片</view>
+    <view wx:else="">行驶证正面照片</view>
+  </view>
 
   <view style="width: 85%; height: 360rpx; border: 1px dashed #61689c; border-radius: 20rpx; margin: 0 auto; padding: 20rpx; display: flex; justify-content: center; align-items: center; background-color: #eee;" bindtap="clickUpLoadBack">
     <block wx:if="{{xsz_image[1] === ''}}">
@@ -48,11 +63,14 @@
       <image src="{{xsz_image[1]}}" style="width: 100%; height: 100%;"></image>
     </block>
   </view>
-  <view style="text-align: center; font-size: 36rpx; color: #686868; padding: 0 10rpx;">行驶证背面照片</view>
+  <view style="text-align: center; font-size: 36rpx; color: #686868; padding: 0 10rpx;">
+    <view wx:if="{{!is_verify}}">点击上传行驶证背面照片</view>
+    <view wx:else="">行驶证背面照片</view>
+  </view>
 </view>
 
-<view style="background-color: #fff; margin-top: 20rpx; padding-bottom: 140rpx;">
-  <view style="text-align: center; font-size: 48rpx; color: #686868; padding: 0 10rpx;">上传车辆照片</view>
+<view style="background-color: #fff; margin-top: 20rpx; padding-bottom: 140rpx; {{is_verify === true ? 'padding-top: 40rpx;' : ''}}">
+  <view wx:if="{{!is_verify}}" style="text-align: center; font-size: 48rpx; color: #686868; padding: 0 10rpx;">上传车辆照片</view>
   <view style="width: 85%; height: 360rpx; border: 1px dashed #61689c; border-radius: 20rpx; margin: 0 auto; padding: 20rpx; display: flex; justify-content: center; align-items: center; background-color: #eee;" bindtap="clickUpLoadCar">
     <block wx:if="{{car_image[0] === ''}}">
       <image src="/images/add.png" style="width: 150rpx; height: 150rpx;"></image>
@@ -61,6 +79,10 @@
       <image src="{{car_image[0]}}" style="width: 100%; height: 100%;"></image>
     </block>
   </view>
+  <view style="text-align: center; font-size: 36rpx; color: #686868; padding: 0 20rpx;">
+    <view wx:if="{{!is_verify}}">点击上传车辆照片</view>
+    <view wx:else="">车辆照片</view>
+  </view>
 </view>
 
-<button class="submit" bindtap='clickSubmit'>提交</button>
+<button wx:if="{{!is_verify}}" class="submit" bindtap='clickSubmit'>提交</button>

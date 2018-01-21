@@ -29,8 +29,8 @@ App({
           wx.getUserInfo({
             success: function (res) {
               console.log('getUserInfo res is : ' + JSON.stringify(res))
-              var encryptedData = res.encryptedData.replace('+','fuckfuckfuck')
-              var iv = res.iv.replace('+', 'fuckfuckfuck')
+              var encryptedData = res.encryptedData.replace('+','&=plus=&')
+              var iv = res.iv.replace('+', '&=plus=&')
               var getUnionIdParam = {
                 code: code,
                 // encryptedData: encodeURIComponent(res.encryptedData),

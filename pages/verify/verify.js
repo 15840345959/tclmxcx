@@ -24,7 +24,8 @@ Page({
     ],
     carBrandIndex: 0,
     xsz_image: ['', ''],
-    car_image: ['']
+    car_image: [''],
+    is_verify: false
   },
 
 	/**
@@ -39,6 +40,41 @@ Page({
     vm.setData({
       userInfo: app.globalData.userInfo,
     })
+
+    util.certificationByUserId({}, function (ret) {
+      if (ret.data.result) {
+
+        var index = 0
+
+        for (var i = 0; i < vm.data.carBrandArray.length; i++) {
+          console.log(vm.data.carBrandArray[i])
+          console.log(ret.data.ret.car_brand)
+          if (vm.data.carBrandArray[i] === ret.data.ret.car_brand) {
+            console.log('bingo is : ' + '[' + i + ']')
+            index = i
+          }
+        }
+
+        console.log('index is : ' + index)
+
+        vm.setData({
+          is_verify: true,
+          owner_name: ret.data.ret.owner_name,
+          car_license: ret.data.ret.car_license,
+          carBrandIndex: index,
+          xsz_image: ret.data.ret.xsz_img,
+          car_image: ret.data.ret.cl_img
+        })
+
+        console.log('verify data is : ' + JSON.stringify(vm.data))
+      }
+      
+
+    }, function (err) {
+
+    })
+
+    
   },
 
 	/**
@@ -106,6 +142,11 @@ Page({
     qiniuUploader.init(options);
   },
   clickUpLoadFront: function () {
+
+    if (vm.data.is_verify) {
+      return
+    }
+
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -136,6 +177,11 @@ Page({
     })
   },
   clickUpLoadBack: function () {
+
+    if (vm.data.is_verify) {
+      return
+    }
+
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -166,6 +212,11 @@ Page({
     })
   },
   clickUpLoadCar: function () {
+
+    if (vm.data.is_verify) {
+      return
+    }
+
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -213,13 +264,7 @@ Page({
   },
   clickSubmit: function () {
 
-    wx.showToast({
-      title: '上传失败',
-      icon: 'none',
-      duration: 1500,
-    })
-
-    return
+    
     
     var param = {}
 
@@ -332,6 +377,8 @@ Page({
 
       if (ret.data.result) {
         util.showToast('上传成功')
+
+        util.navigateBack()
       } else {
         wx.showToast({
           title: '上传失败',

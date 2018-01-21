@@ -166,12 +166,17 @@ Page({
       //注册成功
       if (ret.data.result) {
         //进行数据缓存
-        app.storeUserInfo(ret.data.ret);
+        app.storeUserInfo(ret.data.ret)
         //关闭注册页面
         util.navigateBack(1);
       } else {
-        util.showToast(ret.data.message);
+        util.showToast(ret.data.message)
       }
+    })
+  },
+  clickOpenAgreement: function () {
+    wx.navigateTo({
+      url: '/pages/agreement/agreement',
     })
   }
 })

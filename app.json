@@ -1,7 +1,9 @@
 {
   "pages": [
+    
     "pages/index/index",
     "pages/register/register",
+    "pages/agreement/agreement",
     "pages/logs/logs",
     "pages/my/my",
     "pages/report/report",

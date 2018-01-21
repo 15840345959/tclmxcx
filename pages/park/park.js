@@ -97,16 +97,39 @@ Page({
     })
   },
   getGlobalLocation: function () {
+    // var userLocation = app.globalData.userLocation
+    // var addressComponent = app.globalData.addressComponent
+    // vm.setData({
+    //   userLocation: userLocation,
+    //   addressComponent: addressComponent,
+    //   markers: [{
+    //     iconPath: "/images/position.png",
+    //     id: 0,
+    //     latitude: app.globalData.userLocation.lat,
+    //     longitude: app.globalData.userLocation.lon,
+    //     width: 30,
+    //     height: 30
+    //   }]
+    // })
+
     var userLocation = app.globalData.userLocation
+    var converLocation = util.gcj02towgs84(userLocation.lon, userLocation.lat)
+
+    console.log('userLocation is : ' + JSON.stringify(userLocation))
+    console.log('converLocation is : ' + JSON.stringify(converLocation))
+
     var addressComponent = app.globalData.addressComponent
     vm.setData({
-      userLocation: userLocation,
+      userLocation: converLocation,
       addressComponent: addressComponent,
+    })
+
+    vm.setData({
       markers: [{
         iconPath: "/images/position.png",
         id: 0,
-        latitude: app.globalData.userLocation.lat,
-        longitude: app.globalData.userLocation.lon,
+        latitude: converLocation.lat,
+        longitude: converLocation.lon,
         width: 30,
         height: 30
       }]
@@ -152,7 +175,6 @@ Page({
 
         console.log('is_verify is : ' + JSON.stringify(is_verify))
 
-        if (is_verify) {
           console.log('addressComponent is : ' + JSON.stringify(vm.data.addressComponent))
           console.log('userLocation is : ' + JSON.stringify(vm.data.userLocation))
           console.log('index is : ' + JSON.stringify(vm.data.index))
@@ -171,28 +193,42 @@ Page({
 
           util.parkingCar(param, function (ret) {
             console.log('clickPark ret is : ' + JSON.stringify(ret))
+
+            wx.showModal({
+              title: '提示信息',
+              content: '已为您上传停车位置信息，有贴条情况会通过《停车联盟》公众号提醒您',
+              confirmText: '确认',
+              showCancel: false,
+              success: function (res) {
+                if (res.confirm) {
+                  util.navigateBack()
+                } else if (res.cancel) {
+
+                }
+              }
+            })
           }, function (err) {
             console.log('clickPark err is : ' + JSON.stringify(err))
-          })
-        } else {
-          wx.showModal({
-            title: '提示信息',
-            content: '您还为进行车主认证，进行认证之后可以使用此功能',
-            confirmText: '立即认证',
-            showCancel: true,
-            success: function (res) {
-              if (res.confirm) {
-                wx.navigateTo({
-                  url: '/pages/verify/verify',
-                })
-              } else if (res.cancel) {
 
-              }
-            }
+            
           })
-        }
+        
       } else {
+        wx.showModal({
+          title: '提示信息',
+          content: '您还为进行车主认证，进行认证之后可以使用此功能',
+          confirmText: '立即认证',
+          showCancel: true,
+          success: function (res) {
+            if (res.confirm) {
+              wx.navigateTo({
+                url: '/pages/verify/verify',
+              })
+            } else if (res.cancel) {
 
+            }
+          }
+        })
       }
     }, function (err) {
 
