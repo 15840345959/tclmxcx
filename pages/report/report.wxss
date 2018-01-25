@@ -27,7 +27,7 @@
 }
 
 .intro-content{
-  height:260rpx; 
+  height:100rpx; 
   border-radius: 8px; 
   border:#dcdcdc 1rpx solid;
   font-size: 30rpx;
@@ -51,9 +51,9 @@ textarea {
   border-radius: 0;
 }
 
-.page {
+/* .page {
   position: relative;
-}
+} */
 
 .mark {
   background: rgba(0, 0, 0, 0.3);

@@ -106,9 +106,9 @@ Page({
 
   },
   clickOpenRecharge: function () {
-	  wx.navigateTo({
-		  url: '/pages/recharge/recharge',
-	  })
+    wx.navigateTo({
+      url: '/pages/recharge/recharge',
+    })
   },
   getByIdWithToken: function () {
     util.getByIdWithToken({ id: app.globalData.userInfo.id }, function (ret) {

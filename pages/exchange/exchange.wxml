@@ -1,0 +1,4 @@
+<!--pages/exchange/exchange.wxml-->
+<text>用户和会员所获得的积分可以在商城购买产品时进行兑换；同时也可以直接变现，需要用户点击当前积分，申请积分变现。</text>
+
+<button class="submit" bindtap='clickExchange'>申请兑换</button>

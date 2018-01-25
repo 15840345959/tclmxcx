@@ -17,6 +17,7 @@ Page({
       content: ''
     },
     addressComponent: {},
+    address: '正在定位',
     markers: [
 
     ],
@@ -33,24 +34,60 @@ Page({
       //   clickable: true
       // }
     ],
-    markShow: false
+    markShow: false,
+    focus: false
   },
   onLoad: function (options) {
-    vm = this;
-    this.getGlobalLocation()
+    vm = this
+    vm.getLocation()
   },
-  getGlobalLocation: function () {
-    var userLocation = app.globalData.userLocation
-    var converLocation = util.gcj02towgs84(userLocation.lon, userLocation.lat)
+  getLocation: function () {
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
 
-    console.log('userLocation is : ' + JSON.stringify(userLocation))
-    console.log('converLocation is : ' + JSON.stringify(converLocation))
+        vm.setData({
+          'userLocation.lon': res.longitude,
+          'userLocation.lat': res.latitude
+        })
 
-    var addressComponent = app.globalData.addressComponent
-    vm.setData({
-      userLocation: converLocation,
-      addressComponent: addressComponent,
+        app.globalData.userLocation = vm.data.userLocation
+
+        var globalData = app.globalData
+        console.log('globalData is : ' + JSON.stringify(globalData))
+
+
+        vm.getAddress(vm.data.userLocation)
+      },
+      fail: function (err) {
+        console.log('getLocation fail')
+        util.showToast('定位失败')
+        vm.getLocation()
+      }
     })
+  },
+  getAddress: function (location) {
+    util.getAddress(location, function (ret) {
+      console.log('getAddress ret is : ' + JSON.stringify(ret))
+      
+      var address_component = ret.data.ret.result.address_component
+
+      vm.setData({
+        addressComponent: address_component
+      })
+
+      app.globalData.addressComponent = vm.data.addressComponent
+
+      console.log('report data is : ' + JSON.stringify(vm.data))
+
+      vm.setMap()
+    }, function (err) {
+
+    })
+  },
+  setMap: function () {
+    var userLocation = vm.data.userLocation
+    var converLocation = util.gcj02towgs84(userLocation.lon, userLocation.lat)
 
     vm.setData({
       markers: [{
@@ -62,8 +99,8 @@ Page({
         height: 30
       }]
     })
-    
-    console.log('data is : ' + JSON.stringify(vm.data))
+
+    console.log('report data is : ' + JSON.stringify(vm.data))
   },
   regionchange(e) {
     console.log(e.type)
@@ -78,9 +115,7 @@ Page({
     console.log('1')
   },
   chooseImage: function () {
-
     if (vm.data.files.length >= 1) {
-
       wx.showModal({
         title: '提示信息',
         content: '已经上传1张照片了，最多上传一张',
@@ -93,7 +128,6 @@ Page({
           }
         }
       })
-
       return
     }
 
@@ -107,7 +141,6 @@ Page({
         console.log(JSON.stringify(tempFilePaths))
 
         util.getQiniuToken({}, function (ret) {
-
           console.log('getQiniuToken ret is : ' + JSON.stringify(ret))
 
           vm.initQiniu(ret.data.ret)
@@ -125,11 +158,8 @@ Page({
               vm.setData({
                 files: vm.data.files.concat(realUrl)
               })
-
             }, (error) => {
               console.error('qiniuUploader error is : ' + JSON.stringify(error))
-
-
             })
           }
         }, function (err) {
@@ -161,7 +191,6 @@ Page({
     })
   },
   clickReport: function () {
-
     console.log('clickReport')
 
     var param = {}
@@ -186,7 +215,6 @@ Page({
       })
       return
     }
-
     param.province = vm.data.addressComponent.province
     param.city = vm.data.addressComponent.city
     param.district = vm.data.addressComponent.district
@@ -210,9 +238,6 @@ Page({
       vm.setData({
         markShow: true
       })
-
-
-
     }, function (err) {
       console.log('uploadInfo err is : ' + JSON.stringify(err))
     })
@@ -220,10 +245,10 @@ Page({
   textAreaEventListener: function (e) {
     console.log('textAreaEventListener : ' + JSON.stringify(e))
 
-    if (e.detail.cursor >= 100) {
+    if (e.detail.cursor >= 50) {
       wx.showModal({
         title: '提示信息',
-        content: '描述信息最多输入100个字符，请删减',
+        content: '描述信息最多输入50个字符，请删减',
         showCancel: false,
         success: function (res) {
           if (res.confirm) {
@@ -239,26 +264,6 @@ Page({
     vm.setData({
       'intro.length': e.detail.cursor,
       'intro.content': e.detail.value
-    })
-  },
-  clickGetLocation: function () {
-    console.log('clickGetLocation')
-
-    wx.getLocation({
-      type: 'wgs84',
-      success: function (res) {
-        console.log('getLocation res is : ' + JSON.stringify(res))
-        var latitude = res.latitude
-        var longitude = res.longitude
-        var userLocation = {}
-        userLocation.lat = latitude
-        userLocation.lon = longitude
-
-
-        app.globalData.userLocation = userLocation
-
-        vm.getGlobalLocation()
-      }
     })
   },
   closeMark: function () {
@@ -297,5 +302,12 @@ Page({
         })
       }
     })
+  },
+  clickFocus: function () {
+    console.log('click')
+    vm.setData({
+      focus: true
+    })
+    console.log('setData focus is : ' + JSON.stringify(vm.data.focus))
   }
 })

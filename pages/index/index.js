@@ -6,7 +6,7 @@ var app = getApp()
 
 Page({
   data: {
-    imgUrls: [],
+    ads: [],
     address: "正在定位",
     city: '',
     district: '',
@@ -17,6 +17,7 @@ Page({
     autoplay: true,
     interval: 5000,
     duration: 1000,
+    warning: false
   },
   onLoad: function (options) {
     vm = this;
@@ -26,24 +27,28 @@ Page({
     event.addEventListener('refreshIndexInfo', this, this.refreshIndexInfo.bind(this))
 
     this.getIndexADs()
-    wx.getLocation({
-      type: 'wgs84',
-      success: function (res) {
-        console.log('getLocation res is : ' + JSON.stringify(res))
-        var latitude = res.latitude
-        var longitude = res.longitude
-        var userLocation = {};
-        userLocation.lat = latitude;
-        userLocation.lon = longitude;
-        app.globalData.userLocation = userLocation
+    // wx.getLocation({
+    //   type: 'wgs84',
+    //   success: function (res) {
+    //     console.log('getLocation res is : ' + JSON.stringify(res))
+    //     var latitude = res.latitude
+    //     var longitude = res.longitude
+    //     var userLocation = {};
+    //     userLocation.lat = latitude;
+    //     userLocation.lon = longitude;
+    //     app.globalData.userLocation = userLocation
 
-        var globalData = app.globalData
-        console.log('globalData is : ' + JSON.stringify(globalData))
+    //     var globalData = app.globalData
+    //     console.log('globalData is : ' + JSON.stringify(globalData))
 
-        vm.getAddress(globalData.userLocation)
-        
-      }
-    })
+    //     vm.getAddress(globalData.userLocation)
+    //   },
+    //   fail: function (err) {
+    //     console.log('getLocation fail')
+    //     util.showToast('定位失败')
+    //   }
+    // })
+    vm.getLocation()
   },
   refreshIndexInfo: function () {
     console.log('refreshIndexInfo begin')
@@ -83,13 +88,9 @@ Page({
   },
   getIndexADs: function () {
     util.getIndexADs({}, function (ret) {
-      var data = ret.data.ret
-      var imgUrls = []
-      for (var i in data) {
-        imgUrls.push(data[i].img)
-      }
+      console.log('getIndexADs ret is : ' + JSON.stringify(ret))
       vm.setData({
-        imgUrls: imgUrls
+        ads: ret.data.ret
       })
     }, function (err) {
 
@@ -103,7 +104,9 @@ Page({
 	    console.log('getIndexInfo data is : ' + JSON.stringify(data))
 
       for (var i = 0; i < data.length; i++) {
-        data[i].diff_time = util.getDiffentTime(data[i].created_at, Date.parse(new Date()))
+        data[i].diff_time = util.getDiffentTime(data[i].created_at)
+        // data[i].diff_time = util.getDiffentTime(data[i].created_at, Date.parse(new Date()))
+        // data[i].diff_time = util.getDiffentTime(data[i].created_at, util.getNowTime())
       }
 
       vm.setData({
@@ -120,15 +123,24 @@ Page({
   },
   getAddress: function (location) {
     util.getAddress(location, function (ret) {
-      var addressComponent = ret.data.ret.result.addressComponent
+      console.log('getAddress ret is : ' + JSON.stringify(ret))
+      // var addressComponent = ret.data.ret.result.addressComponent
+      // vm.setData({
+      //   address: addressComponent.city + addressComponent.district,
+      //   city: addressComponent.city,
+      //   district: addressComponent.district,
+      //   street: addressComponent.street
+      // })
+
+      var address_component = ret.data.ret.result.address_component
       vm.setData({
-        address: addressComponent.city + addressComponent.district,
-        city: addressComponent.city,
-        district: addressComponent.district,
-        street: addressComponent.street
+        address: address_component.city + address_component.district,
+        city: address_component.city,
+        district: address_component.district,
+        street: address_component.street
       })
 
-      app.globalData.addressComponent = addressComponent
+      app.globalData.addressComponent = address_component
 
       console.log('data is : ' + JSON.stringify(vm.data))
       vm.getIndexInfo({ city: vm.data.city })
@@ -141,8 +153,16 @@ Page({
       url: '/pages/report/report',
     })
   },
+  onShareAppMessage: function (res) {
+    
+  },
   clickOpenPark: function () {
-    vm.getByIdWithToken()
+
+    wx.navigateTo({
+      url: '/pages/park/park',
+    })
+    
+    // vm.getByIdWithToken()
   },
   getByIdWithToken: function () {
     util.getByIdWithToken({ id: app.globalData.userInfo.id}, function (ret) {
@@ -215,5 +235,58 @@ Page({
     minute = minute < 10 ? ('0' + minute) : minute;      
     second = second < 10 ? ('0' + second) : second;     
     return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;      
+  },
+  getLocation: function () {
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+        console.log('getLocation res is : ' + JSON.stringify(res))
+        var latitude = res.latitude
+        var longitude = res.longitude
+        var userLocation = {}
+        userLocation.lat = latitude
+        userLocation.lon = longitude
+        app.globalData.userLocation = userLocation
+
+        var globalData = app.globalData
+        console.log('globalData is : ' + JSON.stringify(globalData))
+
+        vm.getAddress(globalData.userLocation)
+        vm.getNearlyReportInfo(globalData.userLocation)
+      },
+      fail: function (err) {
+        wx.getSystemInfo({
+          success: function (res) {
+            console.log('getSystemInfo res is : ' + JSON.stringify(res))
+          }
+        })
+        console.log('getLocation fail')
+        util.showToast('定位失败')
+        vm.getLocation()
+      }
+    })
+  },
+  getNearlyReportInfo: function () {
+    var param = {
+      lon: app.globalData.userLocation.lon,
+      lat: app.globalData.userLocation.lat
+    }
+    util.getNearlyReportInfo(param, function (ret) {
+      console.log('getNearlyReportInfo ret is : ' + JSON.stringify(ret))
+      if (ret.data.result) {
+        if (ret.data.ret.length > 0) {
+          vm.setData({
+            warning: true
+          })
+        }
+      }
+    }, function (err) {
+
+    })
+  },
+  clickCancel: function () {
+    vm.setData({
+      warning: false
+    })
   }
 })

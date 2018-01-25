@@ -6,16 +6,17 @@ App({
   onLaunch: function () {
     //获取vm
     vm = this
+
     //获取用户缓存数据
     var userInfo = wx.getStorageSync("userInfo");
-    console.log("local storage userInfo:" + JSON.stringify(userInfo));
+    console.log("local storage userInfo:" + JSON.stringify(userInfo))
     //如果没有缓存
     if (userInfo == null || userInfo == undefined || userInfo == "") {
       //调用登录接口
-      vm.login(null);
+      vm.login(null)
     } else {
       vm.globalData.userInfo = wx.getStorageSync("userInfo");
-      console.log("vm.globalData.userInfo:" + JSON.stringify(vm.globalData.userInfo));
+      console.log("vm.globalData.userInfo:" + JSON.stringify(vm.globalData.userInfo))
     }
   },
   //微信登录

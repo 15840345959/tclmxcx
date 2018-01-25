@@ -38,13 +38,13 @@
 
 <view style="padding: 10rpx 40rpx; background-color: #fff; margin-top: 20rpx;">
     <view class="page__hd">
-        <view class="page__title" style="font-size: 30rpx;">停车联盟</view>
+        <view class="page__title" style="font-size: 30rpx;">会员权益</view>
     </view>
     <view class="page__bd">
         <view class="weui-grids" style="border: none;">
             <block wx:for="{{privilege}}" wx:key="*this">
                 <navigator url="" class="weui-grid" hover-class="weui-grid_active" style="border: none;">
-                    <image class="weui-grid__icon" src="../images/icon_tabbar.png" />
+                    <image class="weui-grid__icon" src="{{item.icon}}" />
                     <view class="weui-grid__label">{{item.name}}</view>
                 </navigator>
             </block>

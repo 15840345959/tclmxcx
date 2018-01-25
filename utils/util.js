@@ -30,7 +30,6 @@ function wxRequest(url, param, method, successCallback, errorCallback) {
     },
     fail: function (err) {
       console.log("wxRequest fail:" + JSON.stringify(err))
-
     },
     complete: function () {
       hideLoading()
@@ -84,6 +83,11 @@ function getIndexInfo(param, successCallback, errorCallback) {
   wxRequest(SERVER_URL + '/api/busi/getInformation', param, "GET", successCallback, errorCallback);
 }
 
+//首页周边巡检信息接口
+function getNearlyReportInfo(param, successCallback, errorCallback) {
+  wxRequest(SERVER_URL + '/api/busi/getNearlyReportInfo', param, "GET", successCallback, errorCallback);
+}
+
 //根据经纬度获取位置信息
 function getAddress(param, successCallback, errorCallback) {
   wxRequest(SERVER_URL + '/api/map/getAddress', param, "GET", successCallback, errorCallback);
@@ -117,7 +121,13 @@ function certification(param, successCallback, errorCallback) {
 // 验证车主信息
 function certificationByUserId(param, successCallback, errorCallback) {
   wxRequest(SERVER_URL + '/api/user/CertificationByUserId', param, "POST", successCallback, errorCallback);
-}
+} 
+
+//积分兑换申请
+function requestExchange(param, successCallback, errorCallback) {
+  wxRequest(SERVER_URL + '/api/user/requestExchange', param, "POST", successCallback, errorCallback);
+} 
+
 
 // 转换真实地址
 function getImgRealUrl(key) {
@@ -509,17 +519,47 @@ function getToday() {
   return year + "-" + month + "-" + day
 }
 
+// 获取现在时间
+function getNowTime() {
+  var now = new Date()
+
+  var year = now.getFullYear()       //年
+  
+  var month = now.getMonth() + 1     //月
+  if (month < 10)
+    month = "0" + month
+
+  var day = now.getDate()            //日
+  if (day < 10)
+    day = "0" + day
+
+  var hour = now.getHours()            //时
+  if (hour < 10)
+    hour = "0" + hour
+
+  var minute = now.getMinutes()            //分
+  if (minute < 10)
+    minute = "0" + minute
+
+  var second = now.getSeconds()           //秒
+  if (second < 10)
+    second = "0" + second
+
+  return year + "-" + month + "-" + day + ' ' + hour + ':' + minute + ':' + second
+}
+
 /**
- * 获取指定时间的友好时间字符串。
+ * 获取指定时间与当前时间差异的友好时间字符串。
  * @param str 指定的时间字符串，如yyyy-MM-dd HH:mm:ss
  * @param now 当前时间，允许时间戳，GMT时间，如果该参数为undefined，则使用浏览器时间。
  */
-function getDiffentTime(str, now) {
+function getDiffentTime(str) {
 
-  console.log('getDiffentTime str is : ' + str)
-  console.log('getDiffentTime now is : ' + now)
+  // console.log('getDiffentTime str is : ' + str)
+  // console.log('getDiffentTime now is : ' + new Date(now))
+  // console.log('getDiffentTime now is : ' + now)
 
-  var currentTime = new Date(now)
+  var currentTime = new Date()
   var arr = str.split(/\s+/gi)
   var temp = 0, arr1, arr2, oldTime, delta
   var getIntValue = function (ss, defaultValue) {
@@ -617,11 +657,13 @@ module.exports = {
 
   getIndexADs: getIndexADs,
   getIndexInfo: getIndexInfo,
+  getNearlyReportInfo: getNearlyReportInfo,
   getAddress: getAddress,
   uploadInfo: uploadInfo,
   getMemberLevel: getMemberLevel,
   beMember: beMember,
   parkingCar: parkingCar,
+  requestExchange: requestExchange,
   certification: certification,
   certificationByUserId: certificationByUserId,
 
@@ -642,5 +684,6 @@ module.exports = {
   navigateToIndex: navigateToIndex,	//跳转到首页
 
   getDiffentTime:getDiffentTime,
-  gcj02towgs84: gcj02towgs84
+  gcj02towgs84: gcj02towgs84,
+  getNowTime: getNowTime
 } 

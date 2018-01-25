@@ -14,8 +14,8 @@ Page({
   data: {
     userInfo: {},
     timeLimit: 1,
-    timeLimitChineseArray: ['30分钟', '1小时', '2小时', '3小时'],
-    timeLimitArray: [0.5, 1, 2, 3],
+    timeLimitChineseArray: ['30分钟', '1小时', '2小时', '3小时', '4小时', '5小时', '6小时', '7小时', '8小时'],
+    timeLimitArray: [0.5, 1, 2, 3, 4, 5, 6, 7, 8],
     index: 0,
     userLocation: {
       lat: "",
@@ -38,7 +38,7 @@ Page({
       userInfo: app.globalData.userInfo
     })
 
-    this.getGlobalLocation()
+    vm.getLocation()
   },
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
@@ -88,41 +88,55 @@ Page({
   onShareAppMessage: function () {
 
   },
-  bindPickerChange: function (e) {
+  getLocation: function () {
+    
+    console.log('click getLocation')
 
-    console.log('bindPickerChange value is : ' + e.detail.value)
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
 
-    this.setData({
-      index: e.detail.value
+        vm.setData({
+          'userLocation.lon': res.longitude,
+          'userLocation.lat': res.latitude
+        })
+
+        app.globalData.userLocation = vm.data.userLocation
+
+        var globalData = app.globalData
+        console.log('globalData is : ' + JSON.stringify(globalData))
+
+        vm.getAddress(vm.data.userLocation)
+      },
+      fail: function (err) {
+        console.log('getLocation fail')
+        util.showToast('定位失败')
+        vm.getLocation()
+      }
     })
   },
-  getGlobalLocation: function () {
-    // var userLocation = app.globalData.userLocation
-    // var addressComponent = app.globalData.addressComponent
-    // vm.setData({
-    //   userLocation: userLocation,
-    //   addressComponent: addressComponent,
-    //   markers: [{
-    //     iconPath: "/images/position.png",
-    //     id: 0,
-    //     latitude: app.globalData.userLocation.lat,
-    //     longitude: app.globalData.userLocation.lon,
-    //     width: 30,
-    //     height: 30
-    //   }]
-    // })
+  getAddress: function (location) {
+    util.getAddress(location, function (ret) {
+      console.log('getAddress ret is : ' + JSON.stringify(ret))
 
-    var userLocation = app.globalData.userLocation
-    var converLocation = util.gcj02towgs84(userLocation.lon, userLocation.lat)
+      var address_component = ret.data.ret.result.address_component
 
-    console.log('userLocation is : ' + JSON.stringify(userLocation))
-    console.log('converLocation is : ' + JSON.stringify(converLocation))
+      vm.setData({
+        addressComponent: address_component
+      })
 
-    var addressComponent = app.globalData.addressComponent
-    vm.setData({
-      userLocation: converLocation,
-      addressComponent: addressComponent,
+      app.globalData.addressComponent = vm.data.addressComponent
+
+      console.log('report data is : ' + JSON.stringify(vm.data))
+
+      vm.setMap()
+    }, function (err) {
+
     })
+  },
+  setMap: function () {
+    var userLocation = vm.data.userLocation
+    var converLocation = util.gcj02towgs84(userLocation.lon, userLocation.lat)
 
     vm.setData({
       markers: [{
@@ -135,7 +149,15 @@ Page({
       }]
     })
 
-    console.log('data is : ' + JSON.stringify(vm.data))
+    console.log('report data is : ' + JSON.stringify(vm.data))
+  },
+  bindPickerChange: function (e) {
+
+    console.log('bindPickerChange value is : ' + e.detail.value)
+
+    this.setData({
+      index: e.detail.value
+    })
   },
   regionchange(e) {
     console.log(e.type)
@@ -145,25 +167,6 @@ Page({
   },
   controltap(e) {
     console.log(e.controlId)
-  },
-  clickGetLocation: function () {
-    console.log('clickGetLocation')
-
-    wx.getLocation({
-      type: 'wgs84',
-      success: function (res) {
-        console.log('getLocation res is : ' + JSON.stringify(res))
-        var latitude = res.latitude
-        var longitude = res.longitude
-        var userLocation = {}
-        userLocation.lat = latitude
-        userLocation.lon = longitude
-
-        app.globalData.userLocation = userLocation
-
-        vm.getGlobalLocation()
-      }
-    })
   },
   clickPark: function () {
     vm.certificationByUserId()
@@ -216,7 +219,7 @@ Page({
       } else {
         wx.showModal({
           title: '提示信息',
-          content: '您还为进行车主认证，进行认证之后可以使用此功能',
+          content: '您还未进行车主认证，进行认证之后可以使用此功能',
           confirmText: '立即认证',
           showCancel: true,
           success: function (res) {

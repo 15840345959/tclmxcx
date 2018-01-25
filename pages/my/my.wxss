@@ -3,3 +3,25 @@
 page {
   background: #F1F1F1;
 }
+
+.cleanerButton {
+  background-color: #fff;
+  color: noffne;
+  line-height: 0;
+  text-align: left;
+  border: none;
+  border-radius: 0;
+  font-size: 18px;
+}
+
+button::after {
+  border: none;
+}
+
+.blur {
+     -webkit-filter: blur(2px);
+     -moz-filter: blur(2px);
+     -o-filter: blur(2px);
+     -ms-filter: blur(2px);
+     filter: blur(2px); 
+}

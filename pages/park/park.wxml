@@ -1,17 +1,29 @@
 <map id="map" longitude="{{ userLocation.lon }}" latitude="{{ userLocation.lat }}" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location
   style="width: 100%; height: 260px;">
-  <cover-view style="width: 90%; height: 66px; background-color: #fff; margin: 180px auto auto auto; border-radius: 20rpx; text-align: center; border: 2rpx solid #ddd;">
+  <!-- <cover-view style="width: 90%; height: 66px; background-color: #fff; margin: 180px auto auto auto; border-radius: 20rpx; text-align: center; border: 2rpx solid #ddd;">
     <cover-view style="height: 50%; text-algin: center; display: flex; justify-content: center; align-items: center;">
-      <cover-view style="min-width: 30%; min-height: 48rpx; display: inline-block; border: 1px solid transparent; border-radius: 6px;  background-color: #ff8159; color: #fff; margin: auto; line-height: 48rpx; font-size: 28rpx;" bindtap='clickGetLocation'>定位当前位置</cover-view>
+      <cover-view style="min-width: 30%; min-height: 48rpx; display: inline-block; border: 1px solid transparent; border-radius: 6px;  background-color: #ff8159; color: #fff; margin: auto; line-height: 48rpx; font-size: 28rpx;" bindtap='getLocation'>定位当前位置</cover-view>
     </cover-view>
     <cover-view style="height: 0; border: 0.5rpx solid #ddd; width: 90%; margin: 0 auto;"></cover-view>
     <cover-view style="height: 50%; text-algin: center;">
       <cover-view style="width: 90%; height: 100%; border-top: none; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
-        <cover-view style="display: inline-block; color: #000; margin: auto; font-size: 28rpx;">{{addressComponent.street}}{{addressComponent.direction}}</cover-view>
+        <cover-view style="display: inline-block; color: #000; margin: auto; font-size: 28rpx;">{{addressComponent.district}}{{addressComponent.street}}</cover-view>
+      </cover-view>
+    </cover-view>
+  </cover-view> -->
+  <cover-view style="width: 90%; height: 150rpx; background-color: #fff; margin: 330rpx auto auto auto; border-radius: 20rpx; text-align: center; border: 2rpx solid #ddd;">
+    <cover-view style="height: 70%; text-algin: center; display: flex; justify-content: center; align-items: center;" catchtap='getLocation'>
+        <cover-view style="width: 100rpx; height: 100rpx; display: inline-block; border: 2rpx solid transparent; border-radius: 200px;  background-color: #ff8159; color: #fff; margin: auto; line-height: 100rpx; font-size: 28rpx;" >定位</cover-view>
+    </cover-view>
+    <cover-view style="height: 0; border: 0.5rpx solid #ddd; width: 90%; margin: 0 auto;"></cover-view>
+    <cover-view style="height: 30%; text-algin: center;">
+      <cover-view style="width: 90%; height: 100%; border-top: none; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
+         <cover-view style="display: inline-block; color: #000; margin: auto; font-size: 28rpx;">{{addressComponent.district}}{{addressComponent.street}}</cover-view>  
       </cover-view>
     </cover-view>
   </cover-view>
 </map>
+
 
 <picker bindchange="bindPickerChange" value="{{index}}" range="{{timeLimitChineseArray}}" style="margin-top: 20rpx;" >
   <view class="weui-cells weui-cells_after-title">
@@ -22,6 +34,9 @@
   </view>
 </picker>
 
-<view style="padding: 40rpx; text-align: center; font-size: 32rpx; color: #999;">5公里范围内有警察贴条，我们会以微信或短信的形式通知您，请时刻查看手机</view>
+<view style="padding: 10rpx; text-align: center; font-size: 32rpx; color: #999;">※ 提醒信息来源于平台用户的上报；</view>
+<view style="padding: 10rpx; text-align: center; font-size: 32rpx; color: #999;">※ 不能保证每一次有情况平台都能及时提醒您；</view>
+<view style="padding: 10rpx; text-align: center; font-size: 32rpx; color: #999;">※ 距您的爱车一公里范围内有情况，我们会通过微信或短信的形式通知您！请您注意查看手机；</view>
+<view style="padding: 10rpx; text-align: center; font-size: 32rpx; color: #999;">※ 请您关注《停车联盟》微信公众号。</view>
 
 <button class="submit" bindtap='clickPark'>上报停车位置</button>

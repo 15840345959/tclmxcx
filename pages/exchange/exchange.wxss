@@ -1,0 +1,10 @@
+/* pages/exchange/exchange.wxss */
+
+.submit {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #60689b;
+  color: #fff;
+  border-radius: 0;
+}

@@ -46,19 +46,19 @@ page {
 }
 
 .themes-list-name {
-  font-size: 32rpx;
+  font-size: 30rpx;
   color: #606898;
-  height: 80rpx;
+  height: 55rpx;
   line-height: 50rpx;
   overflow: hidden;
   text-align: right;
 }
 
 .themes-list-description {
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #999;
-  height: 80rpx;
-  line-height: 120rpx;
+  height: 50rpx;
+  line-height: 60rpx;
   overflow: hidden;
   text-align: right;
 }
@@ -66,4 +66,23 @@ page {
 .no-data-image {
   width: 235rpx;
   height: 197rpx;
+}
+
+.animation-car {
+  animation: car 1s;
+  position:relative;
+}
+
+@keyframes car
+{
+  from {
+    top: -50px;
+  }
+  to {
+    top: 0px;
+  }
+}
+
+.a {
+  position: absolute
 }

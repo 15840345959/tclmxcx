@@ -1,6 +1,5 @@
 {
   "pages": [
-    
     "pages/index/index",
     "pages/register/register",
     "pages/agreement/agreement",
@@ -8,13 +7,19 @@
     "pages/my/my",
     "pages/report/report",
     "pages/member/member",
-	  "pages/recharge/recharge",
+    "pages/recharge/recharge",
     "pages/result/result",
     "pages/park/park",
     "pages/verify/verify",
     "pages/message/message",
-    "pages/personal/personal"
-  ],                    
+    "pages/personal/personal",
+    "pages/intro/intro",
+    "pages/exchange/exchange",
+    "pages/about/about",
+    "pages/test/test",
+    "pages/activity/activity",
+    "pages/score/score"
+  ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#60689B",

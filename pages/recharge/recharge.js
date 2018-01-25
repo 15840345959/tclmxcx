@@ -18,32 +18,32 @@ Page({
 			{
 				name: '短信提醒',
 				url: 'asdasdas',
-				icon: 'asdasdasd'
+				icon: '/images/privilege/message.png'
 			},
 			{
 				name: '优先资源',
 				url: 'asdasdas',
-				icon: 'asdasdasd'
+        icon: '/images/privilege/diamond.png'
 			},
 			{
 				name: '会员礼物',
 				url: 'asdasdas',
-				icon: 'asdasdasd'
+        icon: '/images/privilege/gift.png'
 			},
 			{
 				name: '额外积分',
 				url: 'asdasdas',
-				icon: 'asdasdasd'
+        icon: '/images/privilege/score.png'
 			},
 			{
 				name: '闪电提醒',
 				url: 'asdasdas',
-				icon: 'asdasdasd'
+        icon: '/images/privilege/lightning.png'
 			},
 			{
 				name: '会员独享',
 				url: 'asdasdas',
-				icon: 'asdasdasd'
+        icon: '/images/privilege/member.png'
 			},
 		]
 	},
