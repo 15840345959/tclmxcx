@@ -1,2 +1,27 @@
 <!--pages/activity/activity.wxml-->
-<text>pages/activity/activity.wxml</text>
+<view class="page">
+  <view class="page__bd page__bd_spacing">
+    <view class="weui-flex">
+      <view class="weui-flex__item">
+        <view class="placeholder">
+          <image src="../../images/tclm.jpg" style="height:300rpx"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view style='height:250rpx'></view>
+  <view class="page__bd">
+    <view class="weui-article">
+      <view class="weui-article__section">
+        <view class="weui-article__h3">上传信息成功之后，会获得相应积分</view>
+        <view class="weui-article__h3">积分累积到一定程度之后，可以兑换赏金或礼品</view>
+        <view style='height:50rpx'></view>
+        <view class="weui-article__h3">可用积分兑换7天体验会员</view>
+        <view class="weui-article__h3">积分越多，兑换赏金越高，礼品价值越大</view>
+        <view style='height:50rpx'></view>
+        <view class="weui-article__h3">会员上报额外奖励积分</view>
+        <view class="weui-article__h3">会员可享受短信闪电提醒服务，和更多会员权益</view>
+      </view>
+    </view>   
+  </view>
+</view>
